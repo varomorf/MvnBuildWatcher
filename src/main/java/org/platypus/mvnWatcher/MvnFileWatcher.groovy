@@ -34,15 +34,15 @@ class MvnFileWatcher {
 		List<String> list = getList(text)
 		List<String> built = getBuilt(text)
 		list.collect{
-			def row = ['name':it]
+			def module = new MvnModuleBuildStatus(moduleName:it)
 			if(built.contains(it)){
 				if(built[-1] == it){
-					row.put 'status', 'Building'
+					module.status = MvnModuleBuildStatus.BUILDING
 				}else{
-					row.put 'status', 'Built'
+					module.status = MvnModuleBuildStatus.BUILT
 				}
 			}
-			return row
+			return module
 		}
 	}
 

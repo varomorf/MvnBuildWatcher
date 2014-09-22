@@ -53,7 +53,7 @@ new SwingBuilder().frame(title:'MVN Build Watcher',visible:true,pack:true,
 				scrollPane(preferredSize:[600, 600]){
 					target = table(){
 						tableModel(){
-							closureColumn(header:'Name', read:{row -> return row.name})
+							closureColumn(header:'Name', read:{row -> return row.moduleName})
 							closureColumn(header:'Status', read:{row -> return row.status})
 						}
 					}
