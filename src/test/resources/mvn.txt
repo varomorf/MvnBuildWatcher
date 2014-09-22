@@ -1,0 +1,826 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] FooBar
+[INFO] FooBar :: Parent
+[INFO] FooBar :: Framework
+[INFO] FooBar :: Framework :: Core
+[INFO] FooBar :: Configuration
+[INFO] FooBar :: Configuration :: Core
+[INFO] FooBar :: Framework :: Performance monitoring
+[INFO] FooBar :: Framework :: Utils
+[INFO] FooBar :: Framework :: iTests resources
+[INFO] FooBar :: Configuration :: Context
+[INFO] FooBar :: Process
+[INFO] FooBar :: Process :: Runtime
+[INFO] FooBar :: Framework :: iTests
+[INFO] FooBar :: Model
+[INFO] FooBar :: Model :: BarFoo
+[INFO] FooBar :: Model :: BarFoo Orm
+[INFO] FooBar :: Process :: Syslog
+[INFO] FooBar :: Framework :: Security
+[INFO] FooBar :: Configuration :: Templates
+[INFO] FooBar :: Plugins
+[INFO] FooBar :: Plugins :: Scripts generator
+[INFO] FooBar :: Model :: Framework
+[INFO] FooBar :: View
+[INFO] FooBar :: View :: I18n
+[INFO] FooBar :: Configuration :: Templates test utils
+[INFO] FooBar :: Devices
+[INFO] FooBar :: Devices :: Core
+[INFO] FooBar :: Model :: Business
+[INFO] FooBar :: Model :: Audit
+[INFO] FooBar :: Framework :: Audit
+[INFO] FooBar :: View :: Core
+[INFO] FooBar :: View :: Components
+[INFO] FooBar :: Framework :: ATDD core
+[INFO] FooBar :: Archetypes
+[INFO] FooBar :: Archetypes :: Quickstart
+[INFO] FooBar :: Archetypes :: Properties fragment
+[INFO] FooBar :: Process :: Compiler
+[INFO] FooBar :: Plugins :: Process Compiler
+[INFO] FooBar :: Devices :: PROPS Installer
+[INFO] FooBar :: Devices :: JPROPS XML support
+[INFO] FooBar :: Model :: SQlite JDBC
+[INFO] FooBar :: Model :: Swap
+[INFO] FooBar :: Model :: Test utils
+[INFO] FooBar :: Process :: Runtime tests
+[INFO] FooBar :: Configuration :: Templates converter
+[INFO] FooBar :: Configuration :: Audit logging
+[INFO] FooBar :: Configuration :: Basic logging
+[INFO] FooBar :: Configuration :: Templates tests
+[INFO] FooBar :: Assemblies
+[INFO] FooBar :: Assemblies :: Features
+[INFO] FooBar :: Assemblies :: Features :: Audit
+[INFO] FooBar :: Assemblies :: Features :: Business
+[INFO] FooBar :: Assemblies :: Features :: Config
+[INFO] FooBar :: Assemblies :: Features :: Context
+[INFO] FooBar :: Assemblies :: Features :: Devices
+[INFO] FooBar :: Assemblies :: Features :: Framework
+[INFO] FooBar :: Assemblies :: Features :: Orm
+[INFO] FooBar :: Assemblies :: Features :: View
+[INFO] FooBar :: Assemblies :: Features :: Security
+[INFO] FooBar :: Assemblies :: Features :: Swap
+[INFO] FooBar :: Assemblies :: Features :: Templates
+[INFO] FooBar :: Assemblies :: Features :: I18n
+[INFO] FooBar :: Assemblies :: Features :: Process
+[INFO] FooBar :: Assemblies :: Features :: Automated tests
+[INFO] FooBar :: Assemblies :: Features :: Monitoring
+[INFO] FooBar :: Assemblies :: Features :: FooBar
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ reactor ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ reactor ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\reactor\1.2.27-SNAPSHOT\reactor-1.2.27-SNAPSHOT.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Parent 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ FooBar-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ FooBar-parent ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ FooBar-parent ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-parent\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\FooBar-parent\1.2.27-SNAPSHOT\FooBar-parent-1.2.27-SNAPSHOT.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Framework 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ FooBar-framework ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ FooBar-framework ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ FooBar-framework ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\FooBar-framework\1.2.27-SNAPSHOT\FooBar-framework-1.2.27-SNAPSHOT.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Framework :: Core 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.framework ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.framework ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.framework ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework\src\main\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.framework ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 62 source files to C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.framework ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 18 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.framework ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 15 source files to C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework\target\test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.framework ---
+[INFO] Surefire report directory: C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.FooBar.framework.util.FormattingUtilsTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.593 sec
+Running org.FooBar.framework.services.ServiceLocatorTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.776 sec
+Running org.FooBar.framework.proxy.DomainProxyTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.117 sec
+Running org.FooBar.framework.validation.NIEValidatorTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.081 sec
+Running org.FooBar.framework.validation.CIFValidatorTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.102 sec
+Running org.FooBar.framework.util.ClassUtilsTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.09 sec
+Running org.FooBar.framework.util.ErrorLogInterceptorTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.103 sec
+Running org.FooBar.framework.validation.NIFValidatorTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.251 sec
+Running org.FooBar.framework.util.IOFactoryTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.084 sec
+Running org.FooBar.framework.util.PackagingUtilsTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.116 sec
+Running org.FooBar.framework.validation.AdminPasswordValidationTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 sec
+Running org.FooBar.framework.execution.modes.PROPSExecutionModeTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 sec
+
+Results :
+
+Tests run: 46, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:bundle (default-bundle) @ org.FooBar.framework ---
+[INFO] 
+[INFO] --- maven-assembly-plugin:2.2-beta-5:single (make-assembly) @ org.FooBar.framework ---
+[INFO] Reading assembly descriptor: C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework/src/main/assembly/assembly.xml
+[INFO] META-INF/MANIFEST.MF already added, skipping
+[INFO] META-INF/ already added, skipping
+[INFO] META-INF/maven/ already added, skipping
+[INFO] org/ already added, skipping
+[INFO] Building jar: C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework\target\org.FooBar.framework-1.2.27-SNAPSHOT-executable.jar
+[INFO] META-INF/MANIFEST.MF already added, skipping
+[INFO] META-INF/ already added, skipping
+[INFO] META-INF/maven/ already added, skipping
+[INFO] org/ already added, skipping
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ org.FooBar.framework ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework\target\org.FooBar.framework-1.2.27-SNAPSHOT.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.framework\1.2.27-SNAPSHOT\org.FooBar.framework-1.2.27-SNAPSHOT.jar
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.framework\1.2.27-SNAPSHOT\org.FooBar.framework-1.2.27-SNAPSHOT.pom
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework\target\org.FooBar.framework-1.2.27-SNAPSHOT-executable.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.framework\1.2.27-SNAPSHOT\org.FooBar.framework-1.2.27-SNAPSHOT-executable.jar
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:install (default-install) @ org.FooBar.framework ---
+[INFO] Installing org/FooBar/org.FooBar.framework/1.2.27-SNAPSHOT/org.FooBar.framework-1.2.27-SNAPSHOT.jar
+[INFO] Installing org/FooBar/org.FooBar.framework/1.2.27-SNAPSHOT/org.FooBar.framework-1.2.27-SNAPSHOT-executable.jar
+[INFO] Writing OBR metadata
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Configuration 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ FooBar-configuration ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ FooBar-configuration ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ FooBar-configuration ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-configuration\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\FooBar-configuration\1.2.27-SNAPSHOT\FooBar-configuration-1.2.27-SNAPSHOT.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Configuration :: Core 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.config ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.config\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.config ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.config ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.config ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 16 source files to C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.config\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.config ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 13 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.config ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 11 source files to C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.config\target\test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.config ---
+[INFO] Surefire report directory: C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.config\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.FooBar.config.impl.ResourceServiceInitializerImplTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.122 sec
+Running org.FooBar.config.impl.PropertiesServiceImplTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.024 sec
+Running org.FooBar.config.impl.BundleActivationListenerTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 sec
+Running org.FooBar.config.impl.ResourceServiceImplTest
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.428 sec
+Running org.FooBar.config.FooBarPropertyPlaceholderConfigurerTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.659 sec
+
+Results :
+
+Tests run: 36, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:bundle (default-bundle) @ org.FooBar.config ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ org.FooBar.config ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.config\target\org.FooBar.config-1.2.27-SNAPSHOT.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.config\1.2.27-SNAPSHOT\org.FooBar.config-1.2.27-SNAPSHOT.jar
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.config\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.config\1.2.27-SNAPSHOT\org.FooBar.config-1.2.27-SNAPSHOT.pom
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:install (default-install) @ org.FooBar.config ---
+[INFO] Installing org/FooBar/org.FooBar.config/1.2.27-SNAPSHOT/org.FooBar.config-1.2.27-SNAPSHOT.jar
+[INFO] Writing OBR metadata
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Framework :: Performance monitoring 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.monitoring ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.monitoring\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.monitoring ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.monitoring ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.monitoring ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 3 source files to C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.monitoring\target\classes
+[INFO] 
+[INFO] --- aspectj-maven-plugin:1.4:compile (compile) @ org.FooBar.monitoring ---
+[WARNING] bad version number found in C:\Users\alfergon\.m2\rePROPSitory\org\aspectj\aspectjrt\1.6.12\aspectjrt-1.6.12.jar expected 1.6.11 found 1.6.12
+[WARNING] advice defined in org.FooBar.monitoring.Monitor has not been applied [Xlint:adviceDidNotMatch]
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.monitoring ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.monitoring\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.monitoring ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 3 source files to C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.monitoring\target\test-classes
+[INFO] 
+[INFO] --- aspectj-maven-plugin:1.4:test-compile (test-compile) @ org.FooBar.monitoring ---
+[WARNING] bad version number found in C:\Users\alfergon\.m2\rePROPSitory\org\aspectj\aspectjrt\1.6.12\aspectjrt-1.6.12.jar expected 1.6.11 found 1.6.12
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.monitoring ---
+[INFO] Surefire report directory: C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.monitoring\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.FooBar.monitoring.TimeMonitorTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.814 sec
+
+Results :
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:bundle (default-bundle) @ org.FooBar.monitoring ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ org.FooBar.monitoring ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.monitoring\target\org.FooBar.monitoring-1.2.27-SNAPSHOT.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.monitoring\1.2.27-SNAPSHOT\org.FooBar.monitoring-1.2.27-SNAPSHOT.jar
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.monitoring\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.monitoring\1.2.27-SNAPSHOT\org.FooBar.monitoring-1.2.27-SNAPSHOT.pom
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:install (default-install) @ org.FooBar.monitoring ---
+[INFO] Installing org/FooBar/org.FooBar.monitoring/1.2.27-SNAPSHOT/org.FooBar.monitoring-1.2.27-SNAPSHOT.jar
+[INFO] Writing OBR metadata
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Framework :: Utils 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.utils ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.utils\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.utils ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.utils ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.utils\src\main\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.utils ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 22 source files to C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.utils\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.utils ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.utils\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.utils ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.utils ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ org.FooBar.utils ---
+[INFO] Building jar: C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.utils\target\org.FooBar.utils-1.2.27-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ org.FooBar.utils ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.utils\target\org.FooBar.utils-1.2.27-SNAPSHOT.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.utils\1.2.27-SNAPSHOT\org.FooBar.utils-1.2.27-SNAPSHOT.jar
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.utils\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.utils\1.2.27-SNAPSHOT\org.FooBar.utils-1.2.27-SNAPSHOT.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Framework :: iTests resources 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.framework.test.utils ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test.utils\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.framework.test.utils ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.framework.test.utils ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 7 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.framework.test.utils ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 15 source files to C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test.utils\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.framework.test.utils ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test.utils\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.framework.test.utils ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.framework.test.utils ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:bundle (default-bundle) @ org.FooBar.framework.test.utils ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ org.FooBar.framework.test.utils ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test.utils\target\org.FooBar.framework.test.utils-1.2.27-SNAPSHOT.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.framework.test.utils\1.2.27-SNAPSHOT\org.FooBar.framework.test.utils-1.2.27-SNAPSHOT.jar
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test.utils\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.framework.test.utils\1.2.27-SNAPSHOT\org.FooBar.framework.test.utils-1.2.27-SNAPSHOT.pom
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:install (default-install) @ org.FooBar.framework.test.utils ---
+[INFO] Installing org/FooBar/org.FooBar.framework.test.utils/1.2.27-SNAPSHOT/org.FooBar.framework.test.utils-1.2.27-SNAPSHOT.jar
+[INFO] Writing OBR metadata
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Configuration :: Context 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.context ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.context\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.context ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.context ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.context ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 6 source files to C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.context\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.context ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.context ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 3 source files to C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.context\target\test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.context ---
+[INFO] Surefire report directory: C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.context\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.FooBar.context.impl.FooBarContextServiceTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.726 sec
+Running org.FooBar.context.impl.LoggerContextMapperTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.143 sec
+Running org.FooBar.context.FooBarContextTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 sec
+
+Results :
+
+Tests run: 24, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:bundle (default-bundle) @ org.FooBar.context ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ org.FooBar.context ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.context\target\org.FooBar.context-1.2.27-SNAPSHOT.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.context\1.2.27-SNAPSHOT\org.FooBar.context-1.2.27-SNAPSHOT.jar
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-configuration\org.FooBar.context\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.context\1.2.27-SNAPSHOT\org.FooBar.context-1.2.27-SNAPSHOT.pom
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:install (default-install) @ org.FooBar.context ---
+[INFO] Installing org/FooBar/org.FooBar.context/1.2.27-SNAPSHOT/org.FooBar.context-1.2.27-SNAPSHOT.jar
+[INFO] Writing OBR metadata
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Process 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ FooBar-process ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ FooBar-process ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ FooBar-process ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-process\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\FooBar-process\1.2.27-SNAPSHOT\FooBar-process-1.2.27-SNAPSHOT.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Process :: Runtime 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.process.runtime ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-process\org.FooBar.process.runtime\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.process.runtime ---
+[INFO] 
+[INFO] --- maven-paxexam-plugin:1.2.4:generate-depends-file (generate-config) @ org.FooBar.process.runtime ---
+[INFO] Created: C:\entorno\rePROPSitory\FooBar\FooBar-process\org.FooBar.process.runtime\target\classes\META-INF\maven\dependencies.properties
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.process.runtime ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.process.runtime ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 28 source files to C:\entorno\rePROPSitory\FooBar\FooBar-process\org.FooBar.process.runtime\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.process.runtime ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.process.runtime ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 16 source files to C:\entorno\rePROPSitory\FooBar\FooBar-process\org.FooBar.process.runtime\target\test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.process.runtime ---
+[INFO] Surefire report directory: C:\entorno\rePROPSitory\FooBar\FooBar-process\org.FooBar.process.runtime\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.FooBar.process.ProcessContextTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.82 sec
+Running org.FooBar.process.ProcessBindingMetaClassTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.635 sec
+Running org.FooBar.process.runtime.ProcessActivatorTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.616 sec
+Running org.FooBar.process.ProcessEventTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 sec
+Running org.FooBar.process.ProcessSynchornizationTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.001 sec
+Running org.FooBar.process.ProcessBaseTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.742 sec
+Running org.FooBar.process.ProcessInterruptionTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 sec
+Running org.FooBar.process.rePROPSitory.impl.ProcessRePROPSitoryTest
+Tests run: 22, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 0.139 sec
+
+Results :
+
+Tests run: 64, Failures: 0, Errors: 0, Skipped: 3
+
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:bundle (default-bundle) @ org.FooBar.process.runtime ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:test-jar (default) @ org.FooBar.process.runtime ---
+[INFO] Building jar: C:\entorno\rePROPSitory\FooBar\FooBar-process\org.FooBar.process.runtime\target\org.FooBar.process.runtime-1.2.27-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ org.FooBar.process.runtime ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-process\org.FooBar.process.runtime\target\org.FooBar.process.runtime-1.2.27-SNAPSHOT.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.process.runtime\1.2.27-SNAPSHOT\org.FooBar.process.runtime-1.2.27-SNAPSHOT.jar
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-process\org.FooBar.process.runtime\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.process.runtime\1.2.27-SNAPSHOT\org.FooBar.process.runtime-1.2.27-SNAPSHOT.pom
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-process\org.FooBar.process.runtime\target\org.FooBar.process.runtime-1.2.27-SNAPSHOT-tests.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.process.runtime\1.2.27-SNAPSHOT\org.FooBar.process.runtime-1.2.27-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:install (default-install) @ org.FooBar.process.runtime ---
+[INFO] Installing org/FooBar/org.FooBar.process.runtime/1.2.27-SNAPSHOT/org.FooBar.process.runtime-1.2.27-SNAPSHOT.jar
+[INFO] Writing OBR metadata
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Framework :: iTests 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.framework.test ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.framework.test ---
+[INFO] 
+[INFO] --- maven-paxexam-plugin:1.2.4:generate-depends-file (generate-config) @ org.FooBar.framework.test ---
+[INFO] Created: C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test\target\classes\META-INF\maven\dependencies.properties
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.framework.test ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test\src\main\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.framework.test ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.framework.test ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 7 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.framework.test ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 6 source files to C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test\target\test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.framework.test ---
+[INFO] Surefire report directory: C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.FooBar.framework.services.DynamicOsgiServiceLocatorTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.019 sec
+Running org.FooBar.framework.util.BundleUtilsTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.002 sec
+Running org.FooBar.framework.activator.RegistryActivatorTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0 sec
+
+Results :
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 3
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ org.FooBar.framework.test ---
+[INFO] Building jar: C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test\target\org.FooBar.framework.test-1.2.27-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ org.FooBar.framework.test ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test\target\org.FooBar.framework.test-1.2.27-SNAPSHOT.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.framework.test\1.2.27-SNAPSHOT\org.FooBar.framework.test-1.2.27-SNAPSHOT.jar
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-framework\org.FooBar.framework.test\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.framework.test\1.2.27-SNAPSHOT\org.FooBar.framework.test-1.2.27-SNAPSHOT.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Model 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ FooBar-model ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ FooBar-model ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ FooBar-model ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-model\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\FooBar-model\1.2.27-SNAPSHOT\FooBar-model-1.2.27-SNAPSHOT.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Model :: BarFoo 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.BarFoo ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.BarFoo\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.BarFoo ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.BarFoo ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.BarFoo\src\main\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.BarFoo ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 1 source file to C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.BarFoo\target\classes
+[INFO] 
+[INFO] --- aspectj-maven-plugin:1.4:compile (default) @ org.FooBar.BarFoo ---
+[WARNING] bad version number found in C:\Users\alfergon\.m2\rePROPSitory\org\aspectj\aspectjrt\1.6.12\aspectjrt-1.6.12.jar expected 1.6.11 found 1.6.12
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.BarFoo ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.BarFoo\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.BarFoo ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.BarFoo ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:bundle (default-bundle) @ org.FooBar.BarFoo ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ org.FooBar.BarFoo ---
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.BarFoo\target\org.FooBar.BarFoo-1.2.27-SNAPSHOT.jar to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.BarFoo\1.2.27-SNAPSHOT\org.FooBar.BarFoo-1.2.27-SNAPSHOT.jar
+[INFO] Installing C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.BarFoo\pom.xml to C:\Users\alfergon\.m2\rePROPSitory\org\FooBar\org.FooBar.BarFoo\1.2.27-SNAPSHOT\org.FooBar.BarFoo-1.2.27-SNAPSHOT.pom
+[INFO] 
+[INFO] --- maven-bundle-plugin:2.3.7:install (default-install) @ org.FooBar.BarFoo ---
+[INFO] Installing org/FooBar/org.FooBar.BarFoo/1.2.27-SNAPSHOT/org.FooBar.BarFoo-1.2.27-SNAPSHOT.jar
+[INFO] Writing OBR metadata
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FooBar :: Model :: BarFoo Orm 1.2.27-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ org.FooBar.orm.BarFoo ---
+[INFO] Deleting C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.orm.BarFoo\target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.1.1:enforce (enforce-java) @ org.FooBar.orm.BarFoo ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ org.FooBar.orm.BarFoo ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ org.FooBar.orm.BarFoo ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 20 source files to C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.orm.BarFoo\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ org.FooBar.orm.BarFoo ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 8 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ org.FooBar.orm.BarFoo ---
+[INFO] Using Groovy-Eclipse compiler to compile both Java and Groovy files
+[INFO] Compiling 20 source files to C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.orm.BarFoo\target\test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.14:test (default-test) @ org.FooBar.orm.BarFoo ---
+[INFO] Surefire report directory: C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.orm.BarFoo\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.FooBar.orm.directory.ExtendedDomainDirectoryTest
+Tests run: 6, Failures: 5, Errors: 0, Skipped: 1, Time elapsed: 3.075 sec <<< FAILURE!
+shouldFindDefaultEntityIfOnlyOneEntityImplementsGivenInterface(org.FooBar.orm.directory.ExtendedDomainDirectoryTest)  Time elapsed: 2.705 sec  <<< FAILURE!
+java.lang.AssertionError: FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:400)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:646)
+	at es.nortia_in.orm.enhance.ClassUtils.clearMetaClass(ClassUtils.groovy:83)
+	at es.nortia_in.orm.enhance.ClassUtils$clearMetaClass$0.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at org.FooBar.orm.directory.ExtendedDomainDirectoryTest.clearMetaClasses(ExtendedDomainDirectoryTest.groovy:36)
+
+shouldNotFindDefaultEntityForGivenInterfaceIfThereAreNoDefaultEntity(org.FooBar.orm.directory.ExtendedDomainDirectoryTest)  Time elapsed: 0.012 sec  <<< FAILURE!
+java.lang.AssertionError: FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:400)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:646)
+	at es.nortia_in.orm.enhance.ClassUtils.clearMetaClass(ClassUtils.groovy:83)
+	at es.nortia_in.orm.enhance.ClassUtils$clearMetaClass$0.call(Unknown Source)
+	at org.FooBar.orm.directory.ExtendedDomainDirectoryTest.clearMetaClasses(ExtendedDomainDirectoryTest.groovy:36)
+
+shouldFindDefaultEntityForGivenInterface(org.FooBar.orm.directory.ExtendedDomainDirectoryTest)  Time elapsed: 0.004 sec  <<< FAILURE!
+java.lang.AssertionError: FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:400)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:646)
+	at es.nortia_in.orm.enhance.ClassUtils.clearMetaClass(ClassUtils.groovy:83)
+	at es.nortia_in.orm.enhance.ClassUtils$clearMetaClass$0.call(Unknown Source)
+	at org.FooBar.orm.directory.ExtendedDomainDirectoryTest.clearMetaClasses(ExtendedDomainDirectoryTest.groovy:36)
+
+shouldFindPersistListenersForClass(org.FooBar.orm.directory.ExtendedDomainDirectoryTest)  Time elapsed: 0.066 sec  <<< FAILURE!
+java.lang.AssertionError: FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:400)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:646)
+	at es.nortia_in.orm.enhance.ClassUtils.clearMetaClass(ClassUtils.groovy:83)
+	at es.nortia_in.orm.enhance.ClassUtils$clearMetaClass$0.call(Unknown Source)
+	at org.FooBar.orm.directory.ExtendedDomainDirectoryTest.clearMetaClasses(ExtendedDomainDirectoryTest.groovy:36)
+
+shouldEnhanceDomainClass(org.FooBar.orm.directory.ExtendedDomainDirectoryTest)  Time elapsed: 0.038 sec  <<< FAILURE!
+java.lang.AssertionError: FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:400)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:646)
+	at es.nortia_in.orm.enhance.ClassUtils.clearMetaClass(ClassUtils.groovy:83)
+	at es.nortia_in.orm.enhance.ClassUtils$clearMetaClass$0.call(Unknown Source)
+	at org.FooBar.orm.directory.ExtendedDomainDirectoryTest.clearMetaClasses(ExtendedDomainDirectoryTest.groovy:36)
+
+Running org.FooBar.orm.factory.DomainFactoryTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.612 sec
+Running org.FooBar.orm.GormLikeEnhancementsPUTest
+Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.98 sec
+Running org.FooBar.orm.GormLikeEnhancementsTest
+Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.106 sec
+Running org.FooBar.orm.enhance.DomainProxyEnhancerTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec
+Running org.FooBar.orm.QueryAggregationsTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.36 sec
+
+Results :
+
+Failed tests: 
+  ExtendedDomainDirectoryTest.clearMetaClasses:36 FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+  ExtendedDomainDirectoryTest.clearMetaClasses:36 FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+  ExtendedDomainDirectoryTest.clearMetaClasses:36 FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+  ExtendedDomainDirectoryTest.clearMetaClasses:36 FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+  ExtendedDomainDirectoryTest.clearMetaClasses:36 FooBar requires an instance of [ExpandoMetaClassCreationHandle] to be set in Groovy's MetaClassRegistry!. Expression: (registry.getMetaClassCreationHandler() instanceof groovy.lang.ExpandoMetaClassCreationHandle)
+
+Tests run: 53, Failures: 5, Errors: 0, Skipped: 1
+
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] FooBar ....................................... SUCCESS [0.162s]
+[INFO] FooBar :: Parent ............................. SUCCESS [0.213s]
+[INFO] FooBar :: Framework .......................... SUCCESS [0.009s]
+[INFO] FooBar :: Framework :: Core .................. SUCCESS [15.790s]
+[INFO] FooBar :: Configuration ...................... SUCCESS [0.015s]
+[INFO] FooBar :: Configuration :: Core .............. SUCCESS [10.184s]
+[INFO] FooBar :: Framework :: Performance monitoring  SUCCESS [8.310s]
+[INFO] FooBar :: Framework :: Utils ................. SUCCESS [0.495s]
+[INFO] FooBar :: Framework :: iTests resources ...... SUCCESS [5.633s]
+[INFO] FooBar :: Configuration :: Context ........... SUCCESS [6.658s]
+[INFO] FooBar :: Process ............................ SUCCESS [0.011s]
+[INFO] FooBar :: Process :: Runtime ................. SUCCESS [10.743s]
+[INFO] FooBar :: Framework :: iTests ................ SUCCESS [1.169s]
+[INFO] FooBar :: Model .............................. SUCCESS [0.009s]
+[INFO] FooBar :: Model :: BarFoo ..................... SUCCESS [11.993s]
+[INFO] FooBar :: Model :: BarFoo Orm ................. FAILURE [9.442s]
+[INFO] FooBar :: Process :: Syslog .................. SKIPPED
+[INFO] FooBar :: Framework :: Security .............. SKIPPED
+[INFO] FooBar :: Configuration :: Templates ......... SKIPPED
+[INFO] FooBar :: Plugins ............................ SKIPPED
+[INFO] FooBar :: Plugins :: Scripts generator ....... SKIPPED
+[INFO] FooBar :: Model :: Framework ................. SKIPPED
+[INFO] FooBar :: View ............................... SKIPPED
+[INFO] FooBar :: View :: I18n ....................... SKIPPED
+[INFO] FooBar :: Configuration :: Templates test utils  SKIPPED
+[INFO] FooBar :: Devices ............................ SKIPPED
+[INFO] FooBar :: Devices :: Core .................... SKIPPED
+[INFO] FooBar :: Model :: Business .................. SKIPPED
+[INFO] FooBar :: Model :: Audit ..................... SKIPPED
+[INFO] FooBar :: Framework :: Audit ................. SKIPPED
+[INFO] FooBar :: View :: Core ....................... SKIPPED
+[INFO] FooBar :: View :: Components ................. SKIPPED
+[INFO] FooBar :: Framework :: ATDD core ............. SKIPPED
+[INFO] FooBar :: Archetypes ......................... SKIPPED
+[INFO] FooBar :: Archetypes :: Quickstart ........... SKIPPED
+[INFO] FooBar :: Archetypes :: Properties fragment .. SKIPPED
+[INFO] FooBar :: Process :: Compiler ................ SKIPPED
+[INFO] FooBar :: Plugins :: Process Compiler ........ SKIPPED
+[INFO] FooBar :: Devices :: PROPS Installer ........... SKIPPED
+[INFO] FooBar :: Devices :: JPROPS XML support ........ SKIPPED
+[INFO] FooBar :: Model :: SQlite JDBC ............... SKIPPED
+[INFO] FooBar :: Model :: Swap ...................... SKIPPED
+[INFO] FooBar :: Model :: Test utils ................ SKIPPED
+[INFO] FooBar :: Process :: Runtime tests ........... SKIPPED
+[INFO] FooBar :: Configuration :: Templates converter  SKIPPED
+[INFO] FooBar :: Configuration :: Audit logging ..... SKIPPED
+[INFO] FooBar :: Configuration :: Basic logging ..... SKIPPED
+[INFO] FooBar :: Configuration :: Templates tests ... SKIPPED
+[INFO] FooBar :: Assemblies ......................... SKIPPED
+[INFO] FooBar :: Assemblies :: Features ............. SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Audit .... SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Business . SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Config ... SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Context .. SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Devices .. SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Framework  SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Orm ...... SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: View ..... SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Security . SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Swap ..... SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Templates  SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: I18n ..... SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Process .. SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Automated tests  SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: Monitoring  SKIPPED
+[INFO] FooBar :: Assemblies :: Features :: FooBar  SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1:22.920s
+[INFO] Finished at: Mon Sep 22 16:01:04 CEST 2014
+[INFO] Final Memory: 29M/148M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test) on project org.FooBar.orm.BarFoo: There are test failures.
+[ERROR] 
+[ERROR] Please refer to C:\entorno\rePROPSitory\FooBar\FooBar-model\org.FooBar.orm.BarFoo\target\surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and PROPSsible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <goals> -rf :org.FooBar.orm.BarFoo
