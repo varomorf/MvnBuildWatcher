@@ -10,6 +10,8 @@ import javax.swing.JFrame
 import javax.swing.JTable
 import javax.swing.Timer
 
+import net.miginfocom.swing.MigLayout
+
 MvnFileWatcher fileWatcher = new MvnFileWatcher()
 
 def source
@@ -38,19 +40,16 @@ def selectFile = {
 	}
 }
 
-new SwingBuilder().frame(title:'MVN Build Watcher',visible:true,pack:true,
-		defaultCloseOperation: JFrame.DISPOSE_ON_CLOSE){
-			borderLayout()
-			panel(constraints:BorderLayout.WEST){
-				scrollPane(preferredSize:[600, 600]){ source = textArea() }
-			}
-			panel(constraints:BorderLayout.SOUTH){
-				button(text:'Select file',actionPerformed:selectFile)
-				button(text:'Start auto-analize', actionPerformed:{timer.start()})
-				button(text:'Stop auto-analize', actionPerformed:{timer.stop()})
-			}
-			panel(constraints:BorderLayout.EAST){
-				scrollPane(preferredSize:[600, 600]){
+def swing = new SwingBuilder()
+swing.registerBeanFactory('migLayout', MigLayout)
+
+swing.build{
+	frame(title:'MVN Build Watcher', visible:true, pack:true, preferredSize:[800,600],
+		defaultCloseOperation: JFrame.EXIT_ON_CLOSE){
+		panel(layout:new MigLayout('fill','[]','[90%!][10%!]')){
+			panel(layout:new MigLayout('fill', '[300:600:50%][300:600:50%]','[]'), constraints:'grow, wrap'){
+				scrollPane(constraints:'grow'){source = textArea()}
+				scrollPane(constraints:'grow'){
 					target = table(){
 						tableModel(){
 							closureColumn(header:'Name', read:{row -> return row.moduleName})
@@ -59,4 +58,11 @@ new SwingBuilder().frame(title:'MVN Build Watcher',visible:true,pack:true,
 					}
 				}
 			}
+			panel(constraints: 'shrink 5, center'){
+				button(text:'Select file',actionPerformed:selectFile)
+				button(text:'Start auto-analize', actionPerformed:{timer.start()})
+				button(text:'Stop auto-analize', actionPerformed:{timer.stop()})
+			}
 		}
+	}
+}
