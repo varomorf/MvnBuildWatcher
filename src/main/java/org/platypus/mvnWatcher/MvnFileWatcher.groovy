@@ -77,14 +77,16 @@ class MvnFileWatcher {
 		List<String> list = []
 		text.eachLine {
 			if(it.contains(buildingPart) && !it.contains(jarPart)){
-				list.add(it - buildingPart)
+				list.add(cleanBuiltEntryText(it))
 			}
 		}
-		list = list.collect{
-			int lastWhite = it.lastIndexOf(' ')
-			return it - it[lastWhite..-1]
-		}
 		return list
+	}
+
+	private String cleanBuiltEntryText(String builtEntryText){
+		String ret = builtEntryText - buildingPart
+		int lastWhite = ret.lastIndexOf(' ')
+		return ret - ret[lastWhite..-1]
 	}
 
 	// Inner classes -------------------------------------------------
