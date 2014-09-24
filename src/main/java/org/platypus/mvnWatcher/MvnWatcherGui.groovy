@@ -85,8 +85,12 @@ class MvnWatcherGui {
 	// Inner classes -------------------------------------------------
 
 	def updateStatus = {
-		statusTable.model.rowsModel.value = fileWatcher.getStatusData()
+		MvnBuildStatus status = fileWatcher.getStatusData()
+		statusTable.model.rowsModel.value = status.modulesStatus
 		statusTable.model.fireTableDataChanged()
+		if(status.buildCorrect){
+			timer.stop()
+		}
 	}
 
 	def timerListener = {

@@ -16,6 +16,7 @@ class MvnFileWatcher {
 	static final String empty = '[INFO]'
 	static final String infoPart = '[INFO] '
 	static final String buildingPart = '[INFO] Building '
+	static final String BUILD_SUCCESS = '[INFO] BUILD SUCCESS'
 	static final String jarPart = '.jar'
 
 	// Attributes ----------------------------------------------------
@@ -29,11 +30,19 @@ class MvnFileWatcher {
 
 	// Public --------------------------------------------------------
 
-	public List<Map<String, String>> getStatusData(){
+	/**
+	 * Analyzes the file from a Maven build extracting the modules being built and the actual
+	 * build status for each one of it and returns an object for the status of the whole build.
+	 * 
+	 * @return an object holding the status of a Maven build
+	 */
+	public MvnBuildStatus getStatusData(){
+		MvnBuildStatus status = new MvnBuildStatus()
 		String text = file.text
-		List<String> list = getList(text)
+		List<String> modules = getList(text)
 		List<String> built = getBuilt(text)
-		list.collect{
+		// create list of module statuses for each module
+		status.modulesStatus = modules.collect{
 			def module = new MvnModuleBuildStatus(moduleName:it)
 			if(built.contains(it)){
 				if(built[-1] == it){
@@ -44,10 +53,11 @@ class MvnFileWatcher {
 			}
 			return module
 		}
-	}
-
-	public void refreshData(){
-
+		// check if the complete build has been completed
+		if(text.contains(BUILD_SUCCESS)){
+			status.buildCorrect = true
+		}
+		return status
 	}
 
 	// Package protected ---------------------------------------------
