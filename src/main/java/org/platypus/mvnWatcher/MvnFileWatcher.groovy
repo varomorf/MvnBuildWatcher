@@ -81,21 +81,32 @@ class MvnFileWatcher {
 		return list
 	}
 
+	/**
+	 * Extracts the list of modules already built on a Maven build from a text
+	 *
+	 * @param text the text from which to extract the list of modules
+	 * @return the list of modules already built (can be empty but never null)
+	 */
 	private List<String> getBuilt(String text){
 		List<String> list = []
-		text.eachLine {
-			if(it.contains(buildingPart) && !it.contains(jarPart)){
-				list.add(cleanBuiltEntryText(it))
-			}
-		}
+		text.eachLine addBuildingModuleToCollection.curry(list)
 		return list
 	}
 
+	/**
+	 * Cleans the building part (version included) from a string (that it's supposed to have both
+	 * string on it
+	 * 
+	 * @param builtEntryText the String to be cleaned
+	 * @return the cleaned string
+	 */
 	private String cleanBuiltEntryText(String builtEntryText){
 		String ret = builtEntryText - buildingPart
 		int lastWhite = ret.lastIndexOf(' ')
 		return ret - ret[lastWhite..-1]
 	}
+
+	// Inner classes -------------------------------------------------
 
 	/**
 	 * Analyzes the passed line and checks (depending on the status of the 
@@ -121,6 +132,21 @@ class MvnFileWatcher {
 		}
 	}
 
-	// Inner classes -------------------------------------------------
+	/**
+	 * Analyzes the passed line and checks (depending on the status of the 
+	 * {@link MvnFileWatcher#onList} flag) whether it includes the name of a module being built
+	 * or not, adding it to a collection in positive case.
+	 *  
+	 * @param col The collection in which to add the module name on positive cases
+	 * @param line The line to analyze
+	 * @param lineNum The number of the line (for easy use with eachLine)
+	 */
+	def addBuildingModuleToCollection = { Collection<String> col, String line, int lineNum  ->
+		// add only if not on modules name, the line containg the Building part and the line does
+		// not refer to a jar being built
+		if(onList == false && line.contains(buildingPart) && !line.contains(jarPart)){
+			col.add(cleanBuiltEntryText(line))
+		}
+	}
 
 }
