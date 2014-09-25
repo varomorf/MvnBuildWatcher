@@ -24,8 +24,11 @@ class MvnBuildLauncher {
 	/**The thread on which the build is executed*/
 	Thread buildThread
 
-	/**The file in which the output from the build is being redirected*/
-	File outputFile
+	/**The stream in which the output of the build is being redirected*/
+	BufferedReader buildStream
+
+	/**List of the listeners for the output of the Maven build*/
+	List<MvnBuildOutputListener> listeners = []
 
 	// Static --------------------------------------------------------
 
@@ -33,16 +36,19 @@ class MvnBuildLauncher {
 
 	// Public --------------------------------------------------------
 
-	public void launchBuild(String command, String outputFileName, File buildDir){
+	public void launchBuild(String command, File buildDir){
 		buildThread = Thread.start{
-			outputFile = new File(buildDir, outputFileName)
-			buildProcess = Runtime.getRuntime().exec("$command $REDIRECT $outputFileName", null, buildDir)
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(buildProcess.getInputStream()))
+			buildProcess = Runtime.getRuntime().exec("$command", null, buildDir)
+			buildStream = new BufferedReader(new InputStreamReader(buildProcess.getInputStream()))
 			String s
-			while((s = stdInput.readLine()) != null){
-				outputFile.text += s
+			while((s = buildStream.readLine()) != null){
+				listeners.each{ it.recieveOutput(s) }
 			}
 		}
+	}
+	
+	public void addListener(MvnBuildOutputListener listener){
+		listeners.add listener
 	}
 
 	// Package protected ---------------------------------------------
