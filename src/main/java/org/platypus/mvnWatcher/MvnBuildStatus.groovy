@@ -34,6 +34,24 @@ class MvnBuildStatus {
 		modulesStatus.add new MvnModuleBuildStatus(moduleName: moduleName)
 	}
 
+	/**
+	 * Set the status for the passed module (which mut be contained in this Maven build) as 
+	 * {@link MvnModuleBuildStatus#BUILDING}. As Maven builds are done in an iterative manner, 
+	 * when a module is being built, the module before it will pass to 
+	 * {@link MvnModuleBuildStatus#BUILT} status.
+	 * 
+	 * @param moduleName the name of the module currently being built
+	 */
+	public void setBuildingModule(String moduleName){
+		// special case for first module being built
+		if(modulesStatus[0].isWaiting()){
+			modulesStatus[0].setBuilding()
+		}else{
+			modulesStatus.find{it.moduleName == moduleName}.setBuilding()
+			modulesStatus.find{it.isBuilding()}.setBuilt()
+		}
+	}
+
 	// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------

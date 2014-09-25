@@ -47,15 +47,7 @@ class MvnFileWatcher {
 		// add all modules names to the Maven build status object
 		modules.each{status.addNewModule(it)}
 		// change status of the modules
-		status.modulesStatus.each{
-			if(built.contains(it.moduleName)){
-				if(built[-1] == it.moduleName){
-					it.status = MvnModuleBuildStatus.BUILDING
-				}else{
-					it.status = MvnModuleBuildStatus.BUILT
-				}
-			}
-		}
+		built.each{status.setBuildingModule(it)}
 		// check if the complete build has been completed
 		if(text.contains(BUILD_SUCCESS)){
 			status.buildCorrect = true

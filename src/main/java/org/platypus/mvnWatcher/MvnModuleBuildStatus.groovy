@@ -28,6 +28,44 @@ class MvnModuleBuildStatus {
 
 	// Public --------------------------------------------------------
 
+	/**
+	 * Is the module waiting to be built?
+	 * @return
+	 */
+	public boolean isWaiting(){
+		status == WAITING
+	}
+
+	/**
+	 * Is the module currently being built?
+	 * @return
+	 */
+	public boolean isBuilding(){
+		status == BUILDING
+	}
+
+	/**
+	 * Is the module already built?
+	 * @return
+	 */
+	public boolean isBuilt(){
+		status == BUILT
+	}
+
+	/**
+	 * Set the module's status as {@link MvnModuleBuildStatus#BUILDING}
+	 */
+	public void setBuilding(){
+		status = BUILDING
+	}
+
+	/**
+	 * Set the module's status as {@link MvnModuleBuildStatus#BUILT}
+	 */
+	public void setBuilt(){
+		status = BUILT
+	}
+
 	// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
