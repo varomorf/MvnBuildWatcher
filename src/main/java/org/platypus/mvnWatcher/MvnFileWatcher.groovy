@@ -29,6 +29,9 @@ class MvnFileWatcher {
 	/**Flag for marking whether the watcher is reading the modules list or not*/
 	boolean onList = false
 
+	/**Flag for marking whether the watcher has read the modules list or not*/
+	boolean listRead = false
+
 	// Static --------------------------------------------------------
 
 	// Constructors --------------------------------------------------
@@ -42,12 +45,11 @@ class MvnFileWatcher {
 	 * @return an object holding the status of a Maven build
 	 */
 	public MvnBuildStatus getStatusData(){
+		listRead = false
 		MvnBuildStatus status = new MvnBuildStatus()
 		String text = file.text
-		// add all modules names to the Maven build status object
-		text.eachLine addModuleToBeBuilt.curry(status)
-		// change status of the modules
-		text.eachLine setBuildingModule.curry(status)
+		// analyze each line of the lext
+		text.eachLine analyzeLine.curry(status)
 		// check if the complete build has been completed
 		if(text.contains(BUILD_SUCCESS)){
 			status.buildCorrect = true
@@ -77,17 +79,17 @@ class MvnFileWatcher {
 	// Inner classes -------------------------------------------------
 
 	/**
-	 * Analyzes the passed line and checks (depending on the status of the 
+	 * Analyzes the passed line and checks (depending on the status of the
 	 * {@link MvnFileWatcher#onList} flag) whether it includes the name of a module in the modules'
 	 * list or not, adding it to a collection in positive case.
-	 *  
+	 *
 	 * @param col The MvnBuildStatus in which to add the module name on positive cases
 	 * @param line The line to analyze
-	 * @param lineNum The number of the line (for easy use with eachLine)
 	 */
-	def addModuleToBeBuilt = { MvnBuildStatus status, String line, int lineNum  ->
-		if(line == endOfList){
+	def addModuleToBeBuilt = { MvnBuildStatus status, String line  ->
+		if(onList && line == endOfList){
 			onList = false
+			listRead = true
 		}
 		if(onList && line != empty){
 			String moduleName = line - infoPart
@@ -107,13 +109,28 @@ class MvnFileWatcher {
 	 *  
 	 * @param status The MvnBuildStatus in which to set the module name on positive cases
 	 * @param line The line to analyze
+	 */
+	def setBuildingModule = { MvnBuildStatus status, String line  ->
+		if(line.contains(buildingPart) && !line.contains(jarPart)){
+			status.setBuildingModule(cleanBuiltEntryText(line))
+		}
+	}
+
+	/**
+	 * Analyzes the passed line and checks (depending on the status of the
+	 * {@link MvnFileWatcher#onList} flag) whether it includes the name of a new module to be built,
+	 * the name of a module that is being built or not usefull information, updating the passed
+	 * Maven build status accordingly.
+	 *
+	 * @param status The MvnBuildStatus to update in positive cases
+	 * @param line The line to analyze
 	 * @param lineNum The number of the line (for easy use with eachLine)
 	 */
-	def setBuildingModule = { MvnBuildStatus status, String line, int lineNum  ->
-		// add only if not on modules name, the line containg the Building part and the line does
-		// not refer to a jar being built
-		if(onList == false && line.contains(buildingPart) && !line.contains(jarPart)){
-			status.setBuildingModule(cleanBuiltEntryText(line))
+	def analyzeLine = { MvnBuildStatus status, String line, int lineNum  ->
+		if(listRead == false){
+			addModuleToBeBuilt(status, line)
+		}else{
+			setBuildingModule(status, line)
 		}
 	}
 
