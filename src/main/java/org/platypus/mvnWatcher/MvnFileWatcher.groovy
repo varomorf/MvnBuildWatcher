@@ -24,6 +24,9 @@ class MvnFileWatcher {
 	/**The file wiht the build data to be watched*/
 	File file
 
+	/**Flag for marking whether the watcher is reading the modules list or not*/
+	boolean onList = false
+
 	// Static --------------------------------------------------------
 
 	// Constructors --------------------------------------------------
@@ -66,20 +69,15 @@ class MvnFileWatcher {
 
 	// Private -------------------------------------------------------
 
+	/**
+	 * Extracts the list of modules being built on a Maven build from a text
+	 * 
+	 * @param text the text from which to extract the list of modules
+	 * @return the list of modules (can be empty but never null)
+	 */
 	private List<String> getList(String text){
-		boolean start = false
 		List<String> list = []
-		text.eachLine {
-			if(it == endOfList){
-				start = false
-			}
-			if(start && it != empty){
-				list.add(it - infoPart)
-			}
-			if(it == startOfList){
-				start = true
-			}
-		}
+		text.eachLine addModuleToBeBuiltToCollection.curry(list)
 		return list
 	}
 
@@ -97,6 +95,30 @@ class MvnFileWatcher {
 		String ret = builtEntryText - buildingPart
 		int lastWhite = ret.lastIndexOf(' ')
 		return ret - ret[lastWhite..-1]
+	}
+
+	/**
+	 * Analyzes the passed line and checks (depending on the status of the 
+	 * {@link MvnFileWatcher#onList} flag) whether it includes the name of a module in the modules'
+	 * list or not, adding it to a collection in positive case.
+	 *  
+	 * @param col The collection in which to add the module name on positive cases
+	 * @param line The line to analyze
+	 * @param lineNum The number of the line (for easy use with eachLine)
+	 */
+	def addModuleToBeBuiltToCollection = { Collection<String> col, String line, int lineNum  ->
+		if(line == endOfList){
+			onList = false
+		}
+		if(onList && line != empty){
+			String moduleName = line - infoPart
+			if(moduleName != ''){
+				col.add(moduleName)
+			}
+		}
+		if(line == startOfList){
+			onList = true
+		}
 	}
 
 	// Inner classes -------------------------------------------------
