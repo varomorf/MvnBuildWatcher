@@ -44,17 +44,17 @@ class MvnFileWatcher {
 		String text = file.text
 		List<String> modules = getList(text)
 		List<String> built = getBuilt(text)
-		// create list of module statuses for each module
-		status.modulesStatus = modules.collect{
-			def module = new MvnModuleBuildStatus(moduleName:it)
-			if(built.contains(it)){
-				if(built[-1] == it){
-					module.status = MvnModuleBuildStatus.BUILDING
+		// add all modules names to the Maven build status object
+		modules.each{status.addNewModule(it)}
+		// change status of the modules
+		status.modulesStatus.each{
+			if(built.contains(it.moduleName)){
+				if(built[-1] == it.moduleName){
+					it.status = MvnModuleBuildStatus.BUILDING
 				}else{
-					module.status = MvnModuleBuildStatus.BUILT
+					it.status = MvnModuleBuildStatus.BUILT
 				}
 			}
-			return module
 		}
 		// check if the complete build has been completed
 		if(text.contains(BUILD_SUCCESS)){
