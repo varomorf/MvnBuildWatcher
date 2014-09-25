@@ -1,7 +1,5 @@
 package org.platypus.mvnWatcher
 
-import org.apache.commons.io.FileUtils;
-
 /**
  * Class for launching Maven builds under a folder
  * 
