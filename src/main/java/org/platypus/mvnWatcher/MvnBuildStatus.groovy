@@ -43,12 +43,13 @@ class MvnBuildStatus {
 	 * @param moduleName the name of the module currently being built
 	 */
 	public void setBuildingModule(String moduleName){
+		int index = modulesStatus.findIndexOf{it.moduleName == moduleName}
 		// special case for first module being built
-		if(modulesStatus[0].isWaiting()){
+		if(index == 0){
 			modulesStatus[0].setBuilding()
 		}else{
-			modulesStatus.find{it.moduleName == moduleName}.setBuilding()
-			modulesStatus.find{it.isBuilding()}.setBuilt()
+			modulesStatus[index].setBuilding()
+			modulesStatus[index-1].setBuilt()
 		}
 	}
 
