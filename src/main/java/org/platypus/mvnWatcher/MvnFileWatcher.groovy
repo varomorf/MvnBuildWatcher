@@ -44,12 +44,10 @@ class MvnFileWatcher {
 	public MvnBuildStatus getStatusData(){
 		MvnBuildStatus status = new MvnBuildStatus()
 		String text = file.text
-		List<String> modules = getList(text)
-		List<String> built = getBuilt(text)
 		// add all modules names to the Maven build status object
-		modules.each{status.addNewModule(it)}
+		text.eachLine addModuleToBeBuilt.curry(status)
 		// change status of the modules
-		built.each{status.setBuildingModule(it)}
+		text.eachLine setBuildingModule.curry(status)
 		// check if the complete build has been completed
 		if(text.contains(BUILD_SUCCESS)){
 			status.buildCorrect = true
@@ -62,30 +60,6 @@ class MvnFileWatcher {
 	// Protected -----------------------------------------------------
 
 	// Private -------------------------------------------------------
-
-	/**
-	 * Extracts the list of modules being built on a Maven build from a text
-	 * 
-	 * @param text the text from which to extract the list of modules
-	 * @return the list of modules (can be empty but never null)
-	 */
-	private List<String> getList(String text){
-		List<String> list = []
-		text.eachLine addModuleToBeBuiltToCollection.curry(list)
-		return list
-	}
-
-	/**
-	 * Extracts the list of modules already built on a Maven build from a text
-	 *
-	 * @param text the text from which to extract the list of modules
-	 * @return the list of modules already built (can be empty but never null)
-	 */
-	private List<String> getBuilt(String text){
-		List<String> list = []
-		text.eachLine addBuildingModuleToCollection.curry(list)
-		return list
-	}
 
 	/**
 	 * Cleans the building part (version included) from a string (that it's supposed to have both
@@ -107,18 +81,18 @@ class MvnFileWatcher {
 	 * {@link MvnFileWatcher#onList} flag) whether it includes the name of a module in the modules'
 	 * list or not, adding it to a collection in positive case.
 	 *  
-	 * @param col The collection in which to add the module name on positive cases
+	 * @param col The MvnBuildStatus in which to add the module name on positive cases
 	 * @param line The line to analyze
 	 * @param lineNum The number of the line (for easy use with eachLine)
 	 */
-	def addModuleToBeBuiltToCollection = { Collection<String> col, String line, int lineNum  ->
+	def addModuleToBeBuilt = { MvnBuildStatus status, String line, int lineNum  ->
 		if(line == endOfList){
 			onList = false
 		}
 		if(onList && line != empty){
 			String moduleName = line - infoPart
 			if(StringUtils.isNotBlank(moduleName)){
-				col.add(moduleName)
+				status.addNewModule(moduleName)
 			}
 		}
 		if(line == startOfList){
@@ -131,15 +105,15 @@ class MvnFileWatcher {
 	 * {@link MvnFileWatcher#onList} flag) whether it includes the name of a module being built
 	 * or not, adding it to a collection in positive case.
 	 *  
-	 * @param col The collection in which to add the module name on positive cases
+	 * @param status The MvnBuildStatus in which to set the module name on positive cases
 	 * @param line The line to analyze
 	 * @param lineNum The number of the line (for easy use with eachLine)
 	 */
-	def addBuildingModuleToCollection = { Collection<String> col, String line, int lineNum  ->
+	def setBuildingModule = { MvnBuildStatus status, String line, int lineNum  ->
 		// add only if not on modules name, the line containg the Building part and the line does
 		// not refer to a jar being built
 		if(onList == false && line.contains(buildingPart) && !line.contains(jarPart)){
-			col.add(cleanBuiltEntryText(line))
+			status.setBuildingModule(cleanBuiltEntryText(line))
 		}
 	}
 
