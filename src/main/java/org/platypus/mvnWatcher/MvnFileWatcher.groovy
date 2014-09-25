@@ -1,5 +1,7 @@
 package org.platypus.mvnWatcher
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * File that watches a file with the text from a Maven build and 
  * extracts build's status data from it
@@ -115,7 +117,7 @@ class MvnFileWatcher {
 		}
 		if(onList && line != empty){
 			String moduleName = line - infoPart
-			if(moduleName != ''){
+			if(StringUtils.isNotBlank(moduleName)){
 				col.add(moduleName)
 			}
 		}
