@@ -1,6 +1,7 @@
 package org.platypus.mvnWatcher.controller
 
 import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
+import org.platypus.mvnWatcher.model.MavenBuildProjectFile
 import org.platypus.mvnWatcher.model.MvnBuild
 
 /**
@@ -13,8 +14,6 @@ import org.platypus.mvnWatcher.model.MvnBuild
 class MvnBuildLauncher {
 
 	// Constants -----------------------------------------------------
-
-	static final String SEPARATOR = ';'
 
 	// Attributes ----------------------------------------------------
 
@@ -57,11 +56,9 @@ class MvnBuildLauncher {
 	 *  
 	 * @param buildProjectFile the maven build project file
 	 */
-	public void launchBuildProject(final File buildProjectFile){
-		buildProjectFile.eachLine{
-			def parts = it.tokenize SEPARATOR
-			MvnBuild build = new MvnBuild(directory:new File(parts[0]), options:parts[1])
-			launchBuild(build)
+	public void launchBuildProject(final MavenBuildProjectFile buildProjectFile){
+		buildProjectFile.builds.each{
+			launchBuild(it)
 			while(buildThread.isAlive()){
 				// wait for a second before checking again
 				sleep(1000)

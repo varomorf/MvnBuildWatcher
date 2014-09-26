@@ -12,6 +12,7 @@ import org.platypus.mvnWatcher.controller.MvnBuildLauncher;
 import org.platypus.mvnWatcher.controller.MvnBuildWatcher;
 import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
 import org.platypus.mvnWatcher.listener.MvnBuildStatusListener;
+import org.platypus.mvnWatcher.model.MavenBuildProjectFile
 import org.platypus.mvnWatcher.model.MvnBuild
 import org.platypus.mvnWatcher.model.MvnBuildStatus;
 
@@ -133,13 +134,13 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 		final JFileChooser fc = new JFileChooser()
 		fc.setCurrentDirectory(new File('/'))
 		if (fc.showOpenDialog(rawOutput) == JFileChooser.APPROVE_OPTION) {
-			File buildProject = fc.getSelectedFile()
+			File file = fc.getSelectedFile()
 			swing.doOutside {
 				launcher.addListener(this)
 				launcher.addListener(watcher)
 				watcher.newBuild()
 				watcher.statusListener = this
-				launcher.launchBuildProject(buildProject)
+				launcher.launchBuildProject(new MavenBuildProjectFile(file:file))
 			}
 		}
 	}
