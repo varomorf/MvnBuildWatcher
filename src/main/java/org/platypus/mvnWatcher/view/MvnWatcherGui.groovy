@@ -12,6 +12,7 @@ import org.platypus.mvnWatcher.controller.MvnBuildLauncher;
 import org.platypus.mvnWatcher.controller.MvnBuildWatcher;
 import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
 import org.platypus.mvnWatcher.listener.MvnBuildStatusListener;
+import org.platypus.mvnWatcher.model.MvnBuild
 import org.platypus.mvnWatcher.model.MvnBuildStatus;
 
 import net.miginfocom.swing.MigLayout
@@ -120,7 +121,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 				launcher.addListener(watcher)
 				watcher.newBuild()
 				watcher.statusListener = this
-				launcher.launchBuild(MvnBuildLauncher.MVNCIS, buildDir)
+				launcher.launchBuild(new MvnBuild(buildDir))
 			}
 		}
 	}
@@ -138,7 +139,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 				launcher.addListener(watcher)
 				watcher.newBuild()
 				watcher.statusListener = this
-				launcher.launchBuildProject(MvnBuildLauncher.MVNCIS, buildProject)
+				launcher.launchBuildProject(MvnBuild.MVNCIS, buildProject)
 			}
 		}
 	}

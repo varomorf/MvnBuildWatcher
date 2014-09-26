@@ -1,6 +1,7 @@
 package org.platypus.mvnWatcher.controller
 
 import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
+import org.platypus.mvnWatcher.model.MvnBuild
 
 /**
  * Class for launching Maven builds. This can be done for a specific folder or for each folder on
@@ -12,8 +13,6 @@ import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
 class MvnBuildLauncher {
 
 	// Constants -----------------------------------------------------
-
-	static final String MVNCIS = 'mvn.bat clean install -DskipTests '
 	
 	static final String SEPARATOR = ';'
 
@@ -38,12 +37,11 @@ class MvnBuildLauncher {
 	 * Launches the passed build command on the specified directory and calls listeners passing
 	 * each of the lines of the output of said command
 	 *  
-	 * @param command the command to be launched
-	 * @param buildDir the directory on which to launch the command
+	 * @param build the Maven build to be launched
 	 */
-	public void launchBuild(final String command, final File buildDir){
+	public void launchBuild(final MvnBuild build){
 		buildThread = Thread.start{
-			Process buildProcess = Runtime.getRuntime().exec("$command", null, buildDir)
+			Process buildProcess = Runtime.getRuntime().exec(build.command, null, build.directory)
 			buildStream = new BufferedReader(new InputStreamReader(buildProcess.getInputStream()))
 			String s
 			while((s = buildStream.readLine()) != null){
@@ -63,11 +61,12 @@ class MvnBuildLauncher {
 	public void launchBuildProject(final String command, final File buildProjectFile){
 		buildProjectFile.eachLine{
 			def parts = it.tokenize SEPARATOR
-			String theCommand = new String(command)
+			MvnBuild build = new MvnBuild(directory:new File(parts[0]))
+			build.command = new String(command)
 			if(parts.size() > 1){
-				theCommand += parts[1]
+				build.command += parts[1]
 			}
-			launchBuild(theCommand, new File(parts[0]))
+			launchBuild(build)
 			while(buildThread.isAlive()){
 				// wait for a second before checking again
 				sleep(1000)
