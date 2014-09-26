@@ -121,7 +121,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 				launcher.addListener(watcher)
 				watcher.newBuild()
 				watcher.statusListener = this
-				launcher.launchBuild(new MvnBuild(buildDir))
+				launcher.launchBuild(new MvnBuild(command:MvnBuild.MVNCIS, options:buildDir))
 			}
 		}
 	}
@@ -139,7 +139,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 				launcher.addListener(watcher)
 				watcher.newBuild()
 				watcher.statusListener = this
-				launcher.launchBuildProject(MvnBuild.MVNCIS, buildProject)
+				launcher.launchBuildProject(buildProject)
 			}
 		}
 	}

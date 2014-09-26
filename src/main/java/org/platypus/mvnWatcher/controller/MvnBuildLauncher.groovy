@@ -13,7 +13,7 @@ import org.platypus.mvnWatcher.model.MvnBuild
 class MvnBuildLauncher {
 
 	// Constants -----------------------------------------------------
-	
+
 	static final String SEPARATOR = ';'
 
 	// Attributes ----------------------------------------------------
@@ -50,22 +50,17 @@ class MvnBuildLauncher {
 			}
 		}
 	}
-	
+
 	/**
-	 * Launches the passed build command on each of the directories specified on the build project
-	 * file.
-	 * 
-	 * @param command the command to be launched
-	 * @param buildProjectFile a file with one line for each directory in which to launch a build
+	 * Launches a new build for each line of the project file (that must contain a directory and
+	 * a Maven build command separated by ;) 
+	 *  
+	 * @param buildProjectFile the maven build project file
 	 */
-	public void launchBuildProject(final String command, final File buildProjectFile){
+	public void launchBuildProject(final File buildProjectFile){
 		buildProjectFile.eachLine{
 			def parts = it.tokenize SEPARATOR
-			MvnBuild build = new MvnBuild(directory:new File(parts[0]))
-			build.command = new String(command)
-			if(parts.size() > 1){
-				build.command += parts[1]
-			}
+			MvnBuild build = new MvnBuild(directory:new File(parts[0]), options:parts[1])
 			launchBuild(build)
 			while(buildThread.isAlive()){
 				// wait for a second before checking again
@@ -73,7 +68,7 @@ class MvnBuildLauncher {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds a new listener for the build's output
 	 * @param listener the new listener
