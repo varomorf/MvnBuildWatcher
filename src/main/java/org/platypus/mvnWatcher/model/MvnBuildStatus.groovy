@@ -45,12 +45,20 @@ class MvnBuildStatus {
 	 */
 	public void setBuildingModule(String moduleName){
 		int index = modulesStatus.findIndexOf{it.moduleName == moduleName}
-		// special case for first module being built
-		if(index == 0){
-			modulesStatus[0].setBuilding()
-		}else{
-			modulesStatus[index].setBuilding()
-			modulesStatus[index-1].setBuilt()
+		switch(index){
+			case -1:
+			// module is not yet included -> include as Building
+				addNewModule(moduleName)
+				modulesStatus[-1].setBuilding()
+				break
+			case 0:
+			// special case for first module being built
+				modulesStatus[0].setBuilding()
+				break
+			default:
+			// set current as Building and previous as Built
+				modulesStatus[index].setBuilding()
+				modulesStatus[index-1].setBuilt()
 		}
 	}
 

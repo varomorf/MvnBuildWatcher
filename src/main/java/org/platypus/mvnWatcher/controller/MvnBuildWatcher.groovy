@@ -31,7 +31,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 
 	/**The status of the Maven build being watched*/
 	MvnBuildStatus status
-	
+
 	/**The listener for the changes on this status*/
 	MvnBuildStatusListener statusListener
 
@@ -129,9 +129,8 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	def analyzeLine = { MvnBuildStatus status, String line  ->
 		if(listRead == false){
 			addModuleToBeBuilt(status, line)
-		}else{
-			setBuildingModule(status, line)
 		}
+		setBuildingModule(status, line)
 		// check when the start of the list of modules begin
 		if(line == START_OF_LIST){
 			onList = true
