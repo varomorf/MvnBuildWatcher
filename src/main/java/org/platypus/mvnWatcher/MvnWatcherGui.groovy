@@ -1,6 +1,5 @@
 package org.platypus.mvnWatcher
 
-import java.awt.event.ActionListener
 
 import groovy.swing.SwingBuilder
 
@@ -8,7 +7,6 @@ import javax.swing.JFileChooser
 import javax.swing.JFrame
 import javax.swing.JTable
 import javax.swing.JTextArea
-import javax.swing.Timer
 
 import net.miginfocom.swing.MigLayout
 
@@ -18,7 +16,7 @@ import net.miginfocom.swing.MigLayout
  * @author alfergon
  *
  */
-class MvnWatcherGui implements MvnBuildOutputListener{
+class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 
 	// Constants -----------------------------------------------------
 
@@ -35,9 +33,6 @@ class MvnWatcherGui implements MvnBuildOutputListener{
 
 	/**Launcher for builds*/
 	MvnBuildLauncher launcher = new MvnBuildLauncher()
-
-	/**Timer for updating the GUI*/
-	Timer timer
 
 	/**Swing builder to use for this GUI*/
 	SwingBuilder swing = new SwingBuilder()
@@ -69,18 +64,24 @@ class MvnWatcherGui implements MvnBuildOutputListener{
 							}
 						}
 						panel(constraints: 'shrink 5, center'){
-							button(text:'Start auto-analize', actionPerformed:{timer.start()})
-							button(text:'Stop auto-analize', actionPerformed:{timer.stop()})
-							button(text:'Launch build', actionPerformed:launchBuild)
+							button(text:'Launch build on dir', actionPerformed:launchBuild)
+							button(text:'Launch build project', actionPerformed:launchBuildProject)
 						}
 					}
 				}
-		timer = new Timer(250, updateStatus as ActionListener)
 	}
 
 	@Override
 	public void recieveOutput(String line) {
 		swing.edt{ rawOutput.append(line+'\n') }
+	}
+
+	@Override
+	public void recieveStatus(MvnBuildStatus status) {
+		swing.edt{
+			statusTable.model.rowsModel.value = status.modulesStatus
+			statusTable.model.fireTableDataChanged()
+		}
 	}
 
 	// Package protected ---------------------------------------------
@@ -91,25 +92,48 @@ class MvnWatcherGui implements MvnBuildOutputListener{
 
 	// Inner classes -------------------------------------------------
 
+	/**
+	 * Refreshes the status table
+	 */
 	def updateStatus = {
 		statusTable.model.rowsModel.value = watcher.status.modulesStatus
 		statusTable.model.fireTableDataChanged()
-		if(watcher.status.buildCorrect){
-			timer.stop()
-		}
 	}
 
+	/**
+	 * Launches a Maven build on a directory
+	 */
 	def launchBuild = {
 		final JFileChooser fc = new JFileChooser()
 		fc.setCurrentDirectory(new File('/'))
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
 		if (fc.showOpenDialog(rawOutput) == JFileChooser.APPROVE_OPTION) {
 			File buildDir = fc.getSelectedFile()
-			launcher.addListener(this)
-			launcher.addListener(watcher)
-			launcher.launchBuild(MvnBuildLauncher.MVNCIS, buildDir)
-			watcher.newBuild()
-			timer.start()
+			swing.doOutside {
+				launcher.addListener(this)
+				launcher.addListener(watcher)
+				watcher.newBuild()
+				watcher.statusListener = this
+				launcher.launchBuild(MvnBuildLauncher.MVNCIS, buildDir)
+			}
+		}
+	}
+
+	/**
+	 * Launches a Maven build on each directory specified on a project file
+	 */
+	def launchBuildProject = {
+		final JFileChooser fc = new JFileChooser()
+		fc.setCurrentDirectory(new File('/'))
+		if (fc.showOpenDialog(rawOutput) == JFileChooser.APPROVE_OPTION) {
+			File buildProject = fc.getSelectedFile()
+			swing.doOutside {
+				launcher.addListener(this)
+				launcher.addListener(watcher)
+				watcher.newBuild()
+				watcher.statusListener = this
+				launcher.launchBuildProject(MvnBuildLauncher.MVNCIS, buildProject)
+			}
 		}
 	}
 

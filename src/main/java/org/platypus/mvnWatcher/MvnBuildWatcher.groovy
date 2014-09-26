@@ -3,7 +3,7 @@ package org.platypus.mvnWatcher
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Watches and analyces the outpu from a Maven build and extracts build's status data from it
+ * Watches and analyces the output from a Maven build and extracts build's status data from it
  * 
  * @author alfergon
  */
@@ -11,12 +11,12 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 
 	// Constants -----------------------------------------------------
 
-	static final String startOfList = '[INFO] Reactor Build Order:'
-	static final String endOfList = '[INFO] ------------------------------------------------------------------------'
-	static final String infoPart = '[INFO] '
-	static final String buildingPart = '[INFO] Building '
+	static final String START_OF_LIST = '[INFO] Reactor Build Order:'
+	static final String END_OF_LIST = '[INFO] ------------------------------------------------------------------------'
+	static final String INFO_PART = '[INFO] '
+	static final String BUILDING_PART = '[INFO] Building '
 	static final String BUILD_SUCCESS = '[INFO] BUILD SUCCESS'
-	static final String jarPart = '.jar'
+	static final String JAR_PART = '.jar'
 
 	// Attributes ----------------------------------------------------
 
@@ -28,6 +28,9 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 
 	/**The status of the Maven build being watched*/
 	MvnBuildStatus status
+	
+	/**The listener for the changes on this status*/
+	MvnBuildStatusListener statusListener
 
 	// Static --------------------------------------------------------
 
@@ -49,6 +52,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 		if(line.contains(BUILD_SUCCESS)){
 			status.buildCorrect = true
 		}
+		statusListener.recieveStatus(status)
 	}
 
 	// Package protected ---------------------------------------------
@@ -65,7 +69,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	 * @return the cleaned string
 	 */
 	private String cleanBuiltEntryText(String builtEntryText){
-		String ret = builtEntryText - buildingPart
+		String ret = builtEntryText - BUILDING_PART
 		// remove version (from the las white space to the end of the line)
 		int lastWhite = ret.lastIndexOf(' ')
 		return ret - ret[lastWhite..-1]
@@ -83,20 +87,16 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	 */
 	def addModuleToBeBuilt = { MvnBuildStatus status, String line  ->
 		// check when the list of modules has ended
-		if(onList && line == endOfList){
+		if(onList && line == END_OF_LIST){
 			onList = false
 			listRead = true
 		}
 		if(onList){
-			String moduleName = line - infoPart
+			String moduleName = line - INFO_PART
 			// append only valid module names from the modules' list
 			if(StringUtils.isNotBlank(moduleName)){
 				status.addNewModule(moduleName)
 			}
-		}
-		// check when the start of the list of modules begin
-		if(line == startOfList){
-			onList = true
 		}
 	}
 
@@ -109,7 +109,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	 * @param line The line to analyze
 	 */
 	def setBuildingModule = { MvnBuildStatus status, String line  ->
-		if(line.contains(buildingPart) && !line.contains(jarPart)){
+		if(line.contains(BUILDING_PART) && !line.contains(JAR_PART)){
 			status.setBuildingModule(cleanBuiltEntryText(line))
 		}
 	}
@@ -128,6 +128,11 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 			addModuleToBeBuilt(status, line)
 		}else{
 			setBuildingModule(status, line)
+		}
+		// check when the start of the list of modules begin
+		if(line == START_OF_LIST){
+			onList = true
+			listRead = false
 		}
 		// check for finalization
 		if(line.contains(BUILD_SUCCESS)){
