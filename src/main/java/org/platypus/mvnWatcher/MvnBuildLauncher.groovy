@@ -11,7 +11,9 @@ class MvnBuildLauncher {
 
 	// Constants -----------------------------------------------------
 
-	static final String MVNCIS = 'mvn.bat clean install -DskipTests'
+	static final String MVNCIS = 'mvn.bat clean install -DskipTests '
+	
+	static final String SEPARATOR = ';'
 
 	// Attributes ----------------------------------------------------
 
@@ -37,7 +39,7 @@ class MvnBuildLauncher {
 	 * @param command the command to be launched
 	 * @param buildDir the directory on which to launch the command
 	 */
-	public void launchBuild(String command, File buildDir){
+	public void launchBuild(final String command, final File buildDir){
 		buildThread = Thread.start{
 			Process buildProcess = Runtime.getRuntime().exec("$command", null, buildDir)
 			buildStream = new BufferedReader(new InputStreamReader(buildProcess.getInputStream()))
@@ -56,9 +58,14 @@ class MvnBuildLauncher {
 	 * @param command the command to be launched
 	 * @param buildProjectFile a file with one line for each directory in which to launch a build
 	 */
-	public void launchBuildProject(String command, File buildProjectFile){
+	public void launchBuildProject(final String command, final File buildProjectFile){
 		buildProjectFile.eachLine{
-			launchBuild(command, new File(it))
+			def parts = it.tokenize SEPARATOR
+			String theCommand = new String(command)
+			if(parts.size() > 1){
+				theCommand += parts[1]
+			}
+			launchBuild(theCommand, new File(parts[0]))
 			while(buildThread.isAlive()){
 				// wait for a second before checking again
 				sleep(1000)
