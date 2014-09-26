@@ -1,6 +1,9 @@
-package org.platypus.mvnWatcher
+package org.platypus.mvnWatcher.controller
 
 import org.apache.commons.lang3.StringUtils;
+import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
+import org.platypus.mvnWatcher.listener.MvnBuildStatusListener;
+import org.platypus.mvnWatcher.model.MvnBuildStatus;
 
 /**
  * Watches and analyces the output from a Maven build and extracts build's status data from it

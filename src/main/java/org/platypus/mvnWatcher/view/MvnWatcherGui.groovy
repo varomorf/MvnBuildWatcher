@@ -1,4 +1,4 @@
-package org.platypus.mvnWatcher
+package org.platypus.mvnWatcher.view
 
 
 import groovy.swing.SwingBuilder
@@ -7,6 +7,12 @@ import javax.swing.JFileChooser
 import javax.swing.JFrame
 import javax.swing.JTable
 import javax.swing.JTextArea
+
+import org.platypus.mvnWatcher.controller.MvnBuildLauncher;
+import org.platypus.mvnWatcher.controller.MvnBuildWatcher;
+import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
+import org.platypus.mvnWatcher.listener.MvnBuildStatusListener;
+import org.platypus.mvnWatcher.model.MvnBuildStatus;
 
 import net.miginfocom.swing.MigLayout
 

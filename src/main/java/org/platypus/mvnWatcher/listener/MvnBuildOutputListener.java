@@ -1,4 +1,4 @@
-package org.platypus.mvnWatcher;
+package org.platypus.mvnWatcher.listener;
 
 /**
  * Defines a listener for the output of a Maven build

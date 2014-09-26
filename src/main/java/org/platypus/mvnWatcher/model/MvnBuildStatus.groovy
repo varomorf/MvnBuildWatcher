@@ -1,4 +1,5 @@
-package org.platypus.mvnWatcher
+package org.platypus.mvnWatcher.model
+
 
 /**
  * Holds the status of a Maven Build

@@ -1,4 +1,4 @@
-package org.platypus.mvnWatcher
+package org.platypus.mvnWatcher.model
 
 /**
  * Bean for storing the build status of a Maven Module

@@ -1,4 +1,6 @@
-package org.platypus.mvnWatcher
+package org.platypus.mvnWatcher.controller
+
+import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
 
 /**
  * Class for launching Maven builds. This can be done for a specific folder or for each folder on

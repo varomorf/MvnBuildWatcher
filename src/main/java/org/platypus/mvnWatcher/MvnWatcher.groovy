@@ -1,3 +1,3 @@
-import org.platypus.mvnWatcher.MvnWatcherGui
+import org.platypus.mvnWatcher.view.MvnWatcherGui;
 
 new MvnWatcherGui().showGui()

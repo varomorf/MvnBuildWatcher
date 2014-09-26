@@ -1,4 +1,6 @@
-package org.platypus.mvnWatcher;
+package org.platypus.mvnWatcher.listener;
+
+import org.platypus.mvnWatcher.model.MvnBuildStatus;
 
 /**
  * Defines a listener for the status of a Maven build
