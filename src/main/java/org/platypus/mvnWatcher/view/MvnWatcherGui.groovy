@@ -49,6 +49,15 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 
 	// Constructors --------------------------------------------------
 
+	/**
+	 * Creates a new MvnWatcherGui starting the launcher and watcher
+	 */
+	public MvnWatcherGui(){
+		watcher.statusListener = this
+		launcher.addListener(this)
+		launcher.addListener(watcher)
+	}
+
 	// Public --------------------------------------------------------
 
 	/**
@@ -95,6 +104,15 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
+	
+	/**
+	 * Clean the GUI and leave it as it starts
+	 */
+	protected void cleanGui(){
+		rawOutput.text = ''
+		watcher.newBuild()
+		updateStatus()
+	}
 
 	// Private -------------------------------------------------------
 
@@ -117,11 +135,8 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
 		if (fc.showOpenDialog(rawOutput) == JFileChooser.APPROVE_OPTION) {
 			File buildDir = fc.getSelectedFile()
+			cleanGui()
 			swing.doOutside {
-				launcher.addListener(this)
-				launcher.addListener(watcher)
-				watcher.newBuild()
-				watcher.statusListener = this
 				launcher.launchBuild(new MvnBuild(command:MvnBuild.MVNCIS, options:buildDir))
 			}
 		}
@@ -135,11 +150,8 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 		fc.setCurrentDirectory(new File('/'))
 		if (fc.showOpenDialog(rawOutput) == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile()
+			cleanGui()
 			swing.doOutside {
-				launcher.addListener(this)
-				launcher.addListener(watcher)
-				watcher.newBuild()
-				watcher.statusListener = this
 				launcher.launchBuildProject(new MavenBuildProjectFile(file:file))
 			}
 		}
