@@ -83,6 +83,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 						panel(constraints: 'shrink 5, center'){
 							button(text:'Launch build on dir', actionPerformed:launchBuild)
 							button(text:'Launch build project', actionPerformed:launchBuildProject)
+							button(text:'Stop build', actionPerformed:stopBuild)
 						}
 					}
 				}
@@ -154,6 +155,15 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 			swing.doOutside {
 				launcher.launchBuildProject(new MavenBuildProjectFile(file:file))
 			}
+		}
+	}
+	
+	/**
+	 * Action for stoping the current build
+	 */
+	def stopBuild = {
+		swing.doOutside {
+			launcher.stopBuild()
 		}
 	}
 
