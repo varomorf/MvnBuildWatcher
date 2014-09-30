@@ -1,5 +1,7 @@
 package org.platypus.mvnWatcher.listener;
 
+import org.platypus.mvnWatcher.model.MvnBuild;
+
 /**
  * Defines a listener for the output of a Maven build
  * 
@@ -15,5 +17,13 @@ public interface MvnBuildOutputListener {
 	 *            the line to receive
 	 */
 	void recieveOutput(String line);
+
+	/**
+	 * Receives the build that is being executed
+	 * 
+	 * @param build
+	 *            the build that is being executed
+	 */
+	void receiveBuildLaunched(MvnBuild build);
 
 }

@@ -73,8 +73,10 @@ class MvnBuildLauncher {
 	public void launchBuildProject(final MavenBuildProjectFile buildProjectFile){
 		projectThread = Thread.start{
 			try{
-				buildProjectFile.builds.each{
-					launchBuild(it)
+				buildProjectFile.builds.each{ build ->
+					launchBuild(build)
+					// inform of new build launched
+					listeners.each{it.receiveBuildLaunched(build)}
 					synchronized (buildThread) {
 						// wait until finished
 						buildThread.wait()

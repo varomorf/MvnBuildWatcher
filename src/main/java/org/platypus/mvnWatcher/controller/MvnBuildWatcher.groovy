@@ -3,6 +3,7 @@ package org.platypus.mvnWatcher.controller
 import org.apache.commons.lang3.StringUtils;
 import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
 import org.platypus.mvnWatcher.listener.MvnBuildStatusListener;
+import org.platypus.mvnWatcher.model.MvnBuild;
 import org.platypus.mvnWatcher.model.MvnBuildStatus;
 
 /**
@@ -56,6 +57,11 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 			status.buildCorrect = true
 		}
 		statusListener.recieveStatus(status)
+	}
+
+	@Override
+	public void receiveBuildLaunched(MvnBuild build) {
+		// NOOP
 	}
 
 	// Package protected ---------------------------------------------
