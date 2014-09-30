@@ -5,6 +5,7 @@ import groovy.swing.SwingBuilder
 
 import javax.swing.JFileChooser
 import javax.swing.JFrame
+import javax.swing.JLabel
 import javax.swing.JTable
 import javax.swing.JTextArea
 
@@ -36,6 +37,9 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	/**The table in which the build status will be shown*/
 	JTable statusTable
 
+	/**The label in which the status messages will be shown*/
+	JLabel statuslabel
+
 	/**File watcher instance for analycing and polling the output file from the build*/
 	MvnBuildWatcher watcher = new MvnBuildWatcher()
 
@@ -64,7 +68,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	 * Creates and shows the main GUI for the app
 	 */
 	public void showGui(){
-		def mainLayout = new MigLayout('fill','[]','[90%!][10%!]')
+		def mainLayout = new MigLayout('fill, gap 0!','[]','[87%!][grow][shrink]')
 		def statusLayout = new MigLayout('fill', '[300:600:50%][300:600:50%]','[]')
 		swing.frame(title:'MVN Build Watcher', visible:true, pack:true,
 				preferredSize:[800, 600], defaultCloseOperation: JFrame.EXIT_ON_CLOSE){
@@ -80,10 +84,13 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 								}
 							}
 						}
-						panel(constraints: 'shrink 5, center'){
+						panel(constraints: 'center, wrap'){
 							button(text:'Launch build on dir', actionPerformed:launchBuild)
 							button(text:'Launch build project', actionPerformed:launchBuildProject)
 							button(text:'Stop build', actionPerformed:stopBuild)
+						}
+						panel(){
+							statuslabel = label(text:'Build status')
 						}
 					}
 				}
@@ -91,21 +98,29 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 
 	@Override
 	public void recieveOutput(String line) {
+		// append new line
 		swing.edt{ rawOutput.append(line+'\n') }
 	}
 
 	@Override
 	public void recieveStatus(MvnBuildStatus status) {
 		swing.edt{
+			// change table data and force redraw of the table
 			statusTable.model.rowsModel.value = status.modulesStatus
 			statusTable.model.fireTableDataChanged()
 		}
 	}
 
+	@Override
+	public void receiveBuildLaunched(MvnBuild build) {
+		// update status bar
+		swing.edt{statuslabel.text = "Building $build.command on $build.directory.absolutePath"}
+	}
+
 	// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
-	
+
 	/**
 	 * Clean the GUI and leave it as it starts
 	 */
@@ -157,14 +172,12 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 			}
 		}
 	}
-	
+
 	/**
 	 * Action for stoping the current build
 	 */
 	def stopBuild = {
-		swing.doOutside {
-			launcher.stopBuild()
-		}
+		swing.doOutside { launcher.stopBuild() }
 	}
 
 }
