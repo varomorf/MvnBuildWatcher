@@ -1,5 +1,10 @@
 package org.platypus.mvnWatcher.controller
 
+import org.apache.maven.shared.invoker.DefaultInvocationRequest
+import org.apache.maven.shared.invoker.DefaultInvoker
+import org.apache.maven.shared.invoker.InvocationOutputHandler
+import org.apache.maven.shared.invoker.InvocationRequest
+import org.apache.maven.shared.invoker.Invoker
 import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
 import org.platypus.mvnWatcher.model.MavenBuildProjectFile
 import org.platypus.mvnWatcher.model.MvnBuild
@@ -13,7 +18,7 @@ import com.jezhumble.javasysmon.JavaSysMon
  * @author alfergon
  *
  */
-class MvnBuildLauncher {
+class MvnBuildLauncher implements InvocationOutputHandler {
 
 	// Constants -----------------------------------------------------
 
@@ -25,11 +30,11 @@ class MvnBuildLauncher {
 	/**The parent thread of each of the builds*/
 	Thread projectThread
 
-	/**The stream in which the output of the build is being redirected*/
-	BufferedReader buildStream
-
 	/**List of the listeners for the output of the Maven build*/
 	List<MvnBuildOutputListener> listeners = []
+
+	/**System monitor to kill children processes*/
+	final JavaSysMon sysmon = new JavaSysMon()
 
 	// Static --------------------------------------------------------
 
@@ -45,19 +50,13 @@ class MvnBuildLauncher {
 	 */
 	public void launchBuild(final MvnBuild build){
 		buildThread = Thread.start{
-			// create the new build process for the passed build
-			Process buildProcess = Runtime.getRuntime().exec(build.command, null, build.directory)
-			// get build output
-			buildStream = new BufferedReader(new InputStreamReader(buildProcess.getInputStream()))
 			try{
-				String s
-				while((s = buildStream.readLine()) != null){
-					// notify listeners
-					listeners.each{ it.recieveOutput(s) }
-				}
+				Invoker invoker = new DefaultInvoker()
+				invoker.setOutputHandler(this)
+				invoker.execute(build)
 			}catch(InterruptedException e){
 				// kill process tree
-				new JavaSysMon().infanticide()
+				sysmon.infanticide()
 				// re-assert interrupt
 				Thread.currentThread().interrupt()
 			}
@@ -84,7 +83,7 @@ class MvnBuildLauncher {
 				}
 			}catch(InterruptedException e){
 				// kill process tree
-				buildThread.interrupt()
+				sysmon.infanticide()
 				// re-assert interrupt
 				Thread.currentThread().interrupt()
 			}
@@ -110,6 +109,11 @@ class MvnBuildLauncher {
 	 */
 	public void addListener(MvnBuildOutputListener listener){
 		listeners.add listener
+	}
+
+	@Override
+	public void consumeLine(String line) {
+		listeners.each{it.recieveOutput(line)}
 	}
 
 	// Package protected ---------------------------------------------

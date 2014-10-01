@@ -114,7 +114,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	@Override
 	public void receiveBuildLaunched(MvnBuild build) {
 		// update status bar
-		swing.edt{statuslabel.text = "Building $build.command on $build.directory.absolutePath"}
+		swing.edt{statuslabel.text = "Building $build.goals on $build.pomFile.absolutePath"}
 	}
 
 	// Package protected ---------------------------------------------
@@ -153,7 +153,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 			File buildDir = fc.getSelectedFile()
 			cleanGui()
 			swing.doOutside {
-				launcher.launchBuild(new MvnBuild(command:MvnBuild.MVNCIS, options:buildDir))
+				launcher.launchBuild(new MvnBuild(directory:buildDir))
 			}
 		}
 	}

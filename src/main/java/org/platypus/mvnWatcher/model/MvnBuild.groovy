@@ -1,44 +1,46 @@
 package org.platypus.mvnWatcher.model
 
+import org.apache.maven.shared.invoker.DefaultInvocationRequest
+
 /**
  * Defines a build for maven with the command to be launched and the directory in which to be run
  *  
  * @author alfergon
  *
  */
-class MvnBuild {
+class MvnBuild extends DefaultInvocationRequest{
 
 	// Constants -----------------------------------------------------
-	
-	static final String MVN = 'mvn.bat '
-	
-	static final String MVNCIS = 'clean install -DskipTests '
+
+	/**Default is build without tests*/
+	static final List<String> MVNCIS = [
+		'clean',
+		'install',
+		'-DskipTests'
+	]
+
+	/**Default name for pom file*/
+	static final String POM = 'pom.xml'
 
 	// Attributes ----------------------------------------------------
-	
-	/**The command that will be executed*/
-	String command = MVN
-	
-	/**Options for the Maven build command*/
-	String options = MVNCIS
-	
-	/**The directory in which the command will be executed*/
-	File directory
+
+	/**The name of the pom file*/
+	String pomFileName = POM
 
 	// Static --------------------------------------------------------
 
 	// Constructors --------------------------------------------------
 
 	// Public --------------------------------------------------------
-	
+
 	/**
-	 * Returns the whole command that must be executed
-	 * @return the whole command that must be executed
+	 * Sets the directory in which the pom file will be located
+	 * @param directory the directory in which the pom file will be located
 	 */
-	public String getCommand(){
-		return MVN + options
+	public void setDirectory(File directory){
+		setPomFile(new File(directory, pomFileName))
 	}
-	
+
 	// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
