@@ -1,15 +1,14 @@
 package org.platypus.mvnWatcher.controller
 
-import org.apache.maven.shared.invoker.DefaultInvocationRequest
 import org.apache.maven.shared.invoker.DefaultInvoker
 import org.apache.maven.shared.invoker.InvocationOutputHandler
-import org.apache.maven.shared.invoker.InvocationRequest
 import org.apache.maven.shared.invoker.Invoker
 import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
 import org.platypus.mvnWatcher.model.MavenBuildProjectFile
 import org.platypus.mvnWatcher.model.MvnBuild
 
 import com.jezhumble.javasysmon.JavaSysMon
+import com.jezhumble.javasysmon.OsProcess
 
 /**
  * Class for launching Maven builds. This can be done for a specific folder or for each folder on
@@ -21,6 +20,8 @@ import com.jezhumble.javasysmon.JavaSysMon
 class MvnBuildLauncher implements InvocationOutputHandler {
 
 	// Constants -----------------------------------------------------
+
+	static final String JAVA_EXE = 'java.exe'
 
 	// Attributes ----------------------------------------------------
 
@@ -55,8 +56,6 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 				invoker.setOutputHandler(this)
 				invoker.execute(build)
 			}catch(InterruptedException e){
-				// kill process tree
-				sysmon.infanticide()
 				// re-assert interrupt
 				Thread.currentThread().interrupt()
 			}
@@ -82,8 +81,6 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 					}
 				}
 			}catch(InterruptedException e){
-				// kill process tree
-				sysmon.infanticide()
 				// re-assert interrupt
 				Thread.currentThread().interrupt()
 			}
@@ -94,6 +91,7 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 	 * Stops the currently run build
 	 */
 	public void stopBuild(){
+		killBuildProcess()
 		if(projectThread){
 			projectThread.interrupt()
 		}else{
@@ -119,6 +117,26 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 	// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
+
+	/**
+	 * Searches for and kills the process that is currently building
+	 */
+	protected void killBuildProcess(){
+		int currentPid = new JavaSysMon().currentPid()
+		int buildPid = 0
+		def visitor = {OsProcess p, l ->
+			if(p.processInfo.name == JAVA_EXE && p.processInfo.pid != currentPid){
+				// get the pid of the building process
+				buildPid = p.processInfo.pid
+			}
+			// do not kill visited process
+			return false
+		}
+		// execute the visitor to get the building pid from the current process
+		new JavaSysMon().visitProcessTree(currentPid, visitor)
+		// kill the building process
+		new JavaSysMon().killProcess(buildPid)
+	}
 
 	// Private -------------------------------------------------------
 

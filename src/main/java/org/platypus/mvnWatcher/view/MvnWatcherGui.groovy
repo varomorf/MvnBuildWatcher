@@ -69,7 +69,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	public void showGui(){
 		def mainLayout = new MigLayout('fill, gap 0!','[]','[87%!][grow][shrink]')
 		def statusLayout = new MigLayout('fill', '[300:600:50%][300:600:50%]','[]')
-		swing.frame(title:'MVN Build Watcher', visible:true, pack:true,
+		swing.frame(title:'MVN Build Watcher', visible:true, pack:true, windowClosing:closing,
 				preferredSize:[800, 600], defaultCloseOperation: JFrame.EXIT_ON_CLOSE){
 					panel(layout:mainLayout){
 						panel(layout:statusLayout, constraints:'grow, wrap'){
@@ -185,6 +185,13 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	 */
 	def stopBuild = {
 		swing.doOutside { launcher.stopBuild() }
+	}
+
+	/**
+	 * Stops the current build on the EDT when closing the app
+	 */
+	def closing = {
+		launcher.stopBuild()
 	}
 
 }
