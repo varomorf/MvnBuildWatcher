@@ -10,21 +10,23 @@ package org.platypus.mvnWatcher.model
  */
 class MavenBuildProjectFile {
 
+	static final String OPTIONS_SEPARATOR = ' '
+
 	// Constants -----------------------------------------------------
 
-	static final String SEPARATOR = ';'
-	
+	static final String PARTS_SEPARATOR = ';'
+
 	// Attributes ----------------------------------------------------
-	
+
 	/**The actual project file*/
 	File file
 
 	// Static --------------------------------------------------------
 
 	// Constructors --------------------------------------------------
-	
+
 	// Public --------------------------------------------------------
-	
+
 	/**
 	 * Returns a list with al the build commands for this maven build project file
 	 * 
@@ -33,8 +35,9 @@ class MavenBuildProjectFile {
 	public List<MvnBuild> getBuilds(){
 		List<MvnBuild> list = []
 		file.eachLine{
-			def parts = it.tokenize SEPARATOR
-			list.add new MvnBuild(directory:new File(parts[0]), options:parts[1])
+			def parts = it.tokenize PARTS_SEPARATOR
+			def goals = parts[1].tokenize(OPTIONS_SEPARATOR)
+			list.add new MvnBuild(directory:new File(parts[0]), goals:goals)
 		}
 		return list
 	}
