@@ -1,6 +1,5 @@
 package org.platypus.mvnWatcher.view
 
-
 import groovy.swing.SwingBuilder
 
 import javax.swing.JFileChooser
@@ -130,6 +129,16 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 		updateStatus()
 	}
 
+	/**
+	 * Returns the file of the directory in which the file choosers must start
+	 * 
+	 * @return the file of the directory in which the file choosers must start
+	 */
+	protected File getStartingDir(){
+		// defaults to the executing directory
+		return new File('.')
+	}
+
 	// Private -------------------------------------------------------
 
 	// Inner classes -------------------------------------------------
@@ -146,8 +155,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	 * Launches a Maven build on a directory
 	 */
 	def launchBuild = {
-		final JFileChooser fc = new JFileChooser()
-		fc.setCurrentDirectory(new File('/'))
+		final JFileChooser fc = new JFileChooser(startingDir)
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
 		if (fc.showOpenDialog(rawOutput) == JFileChooser.APPROVE_OPTION) {
 			File buildDir = fc.getSelectedFile()
@@ -162,8 +170,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	 * Launches a Maven build on each directory specified on a project file
 	 */
 	def launchBuildProject = {
-		final JFileChooser fc = new JFileChooser()
-		fc.setCurrentDirectory(new File('/'))
+		final JFileChooser fc = new JFileChooser(startingDir)
 		if (fc.showOpenDialog(rawOutput) == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile()
 			cleanGui()
