@@ -44,7 +44,8 @@ class MvnBuildStatus {
 	 * @param moduleName the name of the module currently being built
 	 */
 	public void setBuildingModule(String moduleName){
-		int index = modulesStatus.findIndexOf{it.moduleName == moduleName}
+		// check also for waiting status to avoid duplicates
+		int index = modulesStatus.findIndexOf{it.moduleName == moduleName && it.waiting}
 		switch(index){
 			case -1:
 			// module is not yet included -> include as Building
