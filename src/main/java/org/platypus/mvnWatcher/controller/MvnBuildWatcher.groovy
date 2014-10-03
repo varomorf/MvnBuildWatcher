@@ -20,7 +20,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	static final String INFO_PART = '[INFO] '
 	static final String BUILDING_PART = '[INFO] Building '
 	static final String BUILD_SUCCESS = '[INFO] BUILD SUCCESS'
-	static final String JAR_PART = '.jar'
+	static final def PACKAGE_FILE_PART = /.+\.[tj]ar.*/
 
 	// Attributes ----------------------------------------------------
 
@@ -117,7 +117,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	 * @param line The line to analyze
 	 */
 	def setBuildingModule = { MvnBuildStatus status, String line  ->
-		if(line.contains(BUILDING_PART) && !line.contains(JAR_PART)){
+		if(line.contains(BUILDING_PART) && !(line ==~ PACKAGE_FILE_PART)){
 			status.setBuildingModule(cleanBuiltEntryText(line))
 		}
 	}
