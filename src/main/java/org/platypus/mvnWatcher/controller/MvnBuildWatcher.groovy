@@ -7,8 +7,8 @@ import org.platypus.mvnWatcher.model.MvnBuild;
 import org.platypus.mvnWatcher.model.MvnBuildStatus;
 
 /**
- * Watches and analyces the output from a Maven build and extracts build's status data from it
- * 
+ * Watches and analyzes the output from a Maven build and extracts builds' status data from it
+ *
  * @author alfergon
  */
 class MvnBuildWatcher implements MvnBuildOutputListener{
@@ -51,12 +51,12 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	}
 
 	@Override
-	public void recieveOutput(String line) {
+	public void receiveOutput(String line) {
 		analyzeLine status, line
 		if(line.contains(BUILD_SUCCESS)){
 			status.buildCorrect = true
 		}
-		statusListener.recieveStatus(status)
+		statusListener.receiveStatus(status)
 	}
 
 	@Override
@@ -73,7 +73,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	/**
 	 * Cleans the building part (version included) from a string (that it's supposed to have both
 	 * string on it
-	 * 
+	 *
 	 * @param builtEntryText the String to be cleaned
 	 * @return the cleaned string
 	 */
@@ -88,7 +88,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 
 	/**
 	 * Analyzes the passed line and checks (depending on the status of the
-	 * {@link MvnFileWatcher#onList} flag) whether it includes the name of a module in the modules'
+	 * {@link MvnBuildWatcher#onList} flag) whether it includes the name of a module in the modules'
 	 * list or not, adding it to a collection in positive case.
 	 *
 	 * @param col The MvnBuildStatus in which to add the module name on positive cases
@@ -110,10 +110,9 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	}
 
 	/**
-	 * Analyzes the passed line and checks (depending on the status of the 
-	 * {@link MvnFileWatcher#onList} flag) whether it includes the name of a module being built
+	 * Analyzes the passed line and checks whether it includes the name of a module being built
 	 * or not, adding it to a collection in positive case.
-	 *  
+	 *
 	 * @param status The MvnBuildStatus in which to set the module name on positive cases
 	 * @param line The line to analyze
 	 */
@@ -125,15 +124,15 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 
 	/**
 	 * Analyzes the passed line and checks (depending on the status of the
-	 * {@link MvnFileWatcher#onList} flag) whether it includes the name of a new module to be built,
-	 * the name of a module that is being built or not usefull information, updating the passed
+	 * {@link MvnBuildWatcher#listRead} flag) whether it includes the name of a new module to be built,
+	 * the name of a module that is being built or not useful information, updating the passed
 	 * Maven build status accordingly.
 	 *
 	 * @param status The MvnBuildStatus to update in positive cases
 	 * @param line The line to analyze
 	 */
 	def analyzeLine = { MvnBuildStatus status, String line  ->
-		if(listRead == false){
+		if(!listRead){
 			addModuleToBeBuilt(status, line)
 		}
 		setBuildingModule(status, line)

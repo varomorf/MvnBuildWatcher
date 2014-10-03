@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>Maven Build Watcher - Core</name>
-	<description>A simple GUI for watching a big MVN project build by analying the output from the build</description>
+	<description>A simple GUI for watching a big MVN project build by analyzing the output from the build</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -24,12 +24,18 @@ class MvnBuild extends DefaultInvocationRequest{
 
 	// Attributes ----------------------------------------------------
 
-	/**The name of the pom file*/
-	String pomFileName = POM
-
 	// Static --------------------------------------------------------
 
 	// Constructors --------------------------------------------------
+
+    /**
+     * Creates a new Maven Build object specifying the
+     */
+    @SuppressWarnings("GroovyAssignabilityCheck")
+    public MvnBuild(){
+        pomFileName = POM
+        goals = MVNCIS
+    }
 
 	// Public --------------------------------------------------------
 

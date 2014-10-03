@@ -25,9 +25,6 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 
 	// Attributes ----------------------------------------------------
 
-	/**The thread on which the build is executed*/
-	Thread buildThread
-
 	/**The parent thread of each of the builds*/
 	Thread projectThread
 
@@ -35,7 +32,7 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 	List<MvnBuildOutputListener> listeners = []
 
 	/**System monitor to kill children processes*/
-	final JavaSysMon sysmon = new JavaSysMon()
+	final JavaSysMon systemMonitor = new JavaSysMon()
 
 	// Static --------------------------------------------------------
 
@@ -48,18 +45,20 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 	 * each of the lines of the output of said command
 	 *  
 	 * @param build the Maven build to be launched
+     * @return the started thread of the build process
 	 */
-	public void launchBuild(final MvnBuild build){
-		buildThread = Thread.start{
+	public Thread launchBuild(final MvnBuild build){
+		Thread.start{
 			try{
 				Invoker invoker = new DefaultInvoker()
 				invoker.setOutputHandler(this)
 				invoker.execute(build)
-			}catch(InterruptedException e){
+			}catch(InterruptedException ignored){
 				// re-assert interrupt
 				Thread.currentThread().interrupt()
 			}
 		}
+
 	}
 
 	/**
@@ -72,7 +71,7 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 		projectThread = Thread.start{
 			try{
 				buildProjectFile.builds.each{ build ->
-					launchBuild(build)
+                    Thread buildThread = launchBuild(build)
 					// inform of new build launched
 					listeners.each{it.receiveBuildLaunched(build)}
 					synchronized (buildThread) {
@@ -80,7 +79,7 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 						buildThread.wait()
 					}
 				}
-			}catch(InterruptedException e){
+			}catch(InterruptedException ignored){
 				// re-assert interrupt
 				Thread.currentThread().interrupt()
 			}
@@ -102,7 +101,7 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 	}
 
 	/**
-	 * Adds a new listener for the build's output
+	 * Adds a new listener for the builds' output
 	 * @param listener the new listener
 	 */
 	public void addListener(MvnBuildOutputListener listener){
@@ -111,7 +110,7 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 
 	@Override
 	public void consumeLine(String line) {
-		listeners.each{it.recieveOutput(line)}
+		listeners.each{it.receiveOutput(line)}
 	}
 
 	// Package protected ---------------------------------------------
@@ -122,20 +121,20 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 	 * Searches for and kills the process that is currently building
 	 */
 	protected void killBuildProcess(){
-		int currentPid = new JavaSysMon().currentPid()
+		int currentPid = systemMonitor.currentPid()
 		int buildPid = 0
 		def visitor = {OsProcess p, l ->
-			if(p.processInfo.name == JAVA_EXE && p.processInfo.pid != currentPid){
+			if(p.processInfo().name == JAVA_EXE && p.processInfo().pid != currentPid){
 				// get the pid of the building process
-				buildPid = p.processInfo.pid
+				buildPid = p.processInfo().pid
 			}
 			// do not kill visited process
 			return false
 		}
 		// execute the visitor to get the building pid from the current process
-		new JavaSysMon().visitProcessTree(currentPid, visitor)
+		systemMonitor.visitProcessTree(currentPid, visitor)
 		// kill the building process
-		new JavaSysMon().killProcess(buildPid)
+		systemMonitor.killProcess(buildPid)
 	}
 
 	// Private -------------------------------------------------------

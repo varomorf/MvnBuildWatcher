@@ -11,12 +11,12 @@ import org.platypus.mvnWatcher.model.MvnBuild;
 public interface MvnBuildOutputListener {
 
 	/**
-	 * Recieves a line from the output of the Maven build
+	 * Receives a line from the output of the Maven build
 	 * 
 	 * @param line
 	 *            the line to receive
 	 */
-	void recieveOutput(String line);
+	void receiveOutput(String line);
 
 	/**
 	 * Receives the build that is being executed

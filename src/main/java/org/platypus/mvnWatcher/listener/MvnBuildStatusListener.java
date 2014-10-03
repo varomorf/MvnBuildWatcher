@@ -11,11 +11,11 @@ import org.platypus.mvnWatcher.model.MvnBuildStatus;
 public interface MvnBuildStatusListener {
 
 	/**
-	 * Recieves the current status of the Maven build
+	 * Receives the current status of the Maven build
 	 * 
 	 * @param status
 	 *            the status to receive
 	 */
-	void recieveStatus(MvnBuildStatus status);
+	void receiveStatus(MvnBuildStatus status);
 
 }
