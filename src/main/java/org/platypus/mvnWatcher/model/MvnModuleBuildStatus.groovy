@@ -2,7 +2,7 @@ package org.platypus.mvnWatcher.model
 
 /**
  * Bean for storing the build status of a Maven Module
- * 
+ *
  * @author alfergon
  *
  */
@@ -32,7 +32,7 @@ class MvnModuleBuildStatus {
 	 * Is the module waiting to be built?
 	 * @return
 	 */
-	public boolean isWaiting(){
+	public boolean isWaiting() {
 		status == WAITING
 	}
 
@@ -40,7 +40,7 @@ class MvnModuleBuildStatus {
 	 * Is the module currently being built?
 	 * @return
 	 */
-	public boolean isBuilding(){
+	public boolean isBuilding() {
 		status == BUILDING
 	}
 
@@ -48,30 +48,30 @@ class MvnModuleBuildStatus {
 	 * Is the module already built?
 	 * @return
 	 */
-	public boolean isBuilt(){
+	public boolean isBuilt() {
 		status == BUILT
 	}
 
 	/**
 	 * Set the module's status as {@link MvnModuleBuildStatus#BUILDING}
 	 */
-	public void setBuilding(){
+	public void setBuilding() {
 		status = BUILDING
 	}
 
 	/**
 	 * Set the module's status as {@link MvnModuleBuildStatus#BUILT}
 	 */
-	public void setBuilt(){
+	public void setBuilt() {
 		status = BUILT
 	}
 
-    @Override
-    String toString() {
-        return "$moduleName : $status"
-    }
+	@Override
+	String toString() {
+		return "$moduleName : $status"
+	}
 
-    // Package protected ---------------------------------------------
+	// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
 

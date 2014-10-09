@@ -1,30 +1,24 @@
 package org.platypus.mvnWatcher.view
 
 import groovy.swing.SwingBuilder
-
-import javax.swing.JFileChooser
-import javax.swing.JFrame
-import javax.swing.JLabel
-import javax.swing.JTable
-import javax.swing.JTextArea
-
-import org.platypus.mvnWatcher.controller.MvnBuildLauncher;
-import org.platypus.mvnWatcher.controller.MvnBuildWatcher;
-import org.platypus.mvnWatcher.listener.MvnBuildOutputListener;
-import org.platypus.mvnWatcher.listener.MvnBuildStatusListener;
+import net.miginfocom.swing.MigLayout
+import org.platypus.mvnWatcher.controller.MvnBuildLauncher
+import org.platypus.mvnWatcher.controller.MvnBuildWatcher
+import org.platypus.mvnWatcher.listener.MvnBuildOutputListener
+import org.platypus.mvnWatcher.listener.MvnBuildStatusListener
 import org.platypus.mvnWatcher.model.MavenBuildProjectFile
 import org.platypus.mvnWatcher.model.MvnBuild
-import org.platypus.mvnWatcher.model.MvnBuildStatus;
+import org.platypus.mvnWatcher.model.MvnBuildStatus
 
-import net.miginfocom.swing.MigLayout
+import javax.swing.*
 
 /**
  * Main window for the Maven Watcher app
- * 
+ *
  * @author alfergon
  *
  */
-class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
+class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 
 	// Constants -----------------------------------------------------
 
@@ -55,7 +49,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	/**
 	 * Creates a new MvnWatcherGui starting the launcher and watcher
 	 */
-	public MvnWatcherGui(){
+	public MvnWatcherGui() {
 		watcher.statusListener = this
 		launcher.addListener(this)
 		launcher.addListener(watcher)
@@ -66,45 +60,45 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	/**
 	 * Creates and shows the main GUI for the app
 	 */
-	public void showGui(){
-		def mainLayout = new MigLayout('fill, gap 0!','[]','[87%!][grow][shrink]')
-		def statusLayout = new MigLayout('fill', '[300:600:50%][300:600:50%]','[]')
-        //noinspection GroovyAssignabilityCheck
-        swing.frame(title:'MVN Build Watcher', visible:true, pack:true, windowClosing:closing,
-				preferredSize:[800, 600], defaultCloseOperation: JFrame.EXIT_ON_CLOSE){
-					panel(layout:mainLayout){
-						panel(layout:statusLayout, constraints:'grow, wrap'){
-							scrollPane(constraints:'grow'){rawOutput = textArea()}
-							scrollPane(constraints:'grow'){
-								statusTable = table(){
-									tableModel(){
-										closureColumn(header:'Name', read:{row -> return row.moduleName})
-										closureColumn(header:'Status', read:{row -> return row.status})
-									}
-								}
+	public void showGui() {
+		def mainLayout = new MigLayout('fill, gap 0!', '[]', '[87%!][grow][shrink]')
+		def statusLayout = new MigLayout('fill', '[300:600:50%][300:600:50%]', '[]')
+		//noinspection GroovyAssignabilityCheck
+		swing.frame(title: 'MVN Build Watcher', visible: true, pack: true, windowClosing: closing,
+				preferredSize: [800, 600], defaultCloseOperation: JFrame.EXIT_ON_CLOSE) {
+			panel(layout: mainLayout) {
+				panel(layout: statusLayout, constraints: 'grow, wrap') {
+					scrollPane(constraints: 'grow') { rawOutput = textArea() }
+					scrollPane(constraints: 'grow') {
+						statusTable = table() {
+							tableModel() {
+								closureColumn(header: 'Name', read: { row -> return row.moduleName })
+								closureColumn(header: 'Status', read: { row -> return row.status })
 							}
-						}
-						panel(constraints: 'center, wrap'){
-							button(text:'Launch build on dir', actionPerformed:launchBuild)
-							button(text:'Launch build project', actionPerformed:launchBuildProject)
-							button(text:'Stop build', actionPerformed:stopBuild)
-						}
-						panel(){
-							statusLabel = label(text:'Build status')
 						}
 					}
 				}
+				panel(constraints: 'center, wrap') {
+					button(text: 'Launch build on dir', actionPerformed: launchBuild)
+					button(text: 'Launch build project', actionPerformed: launchBuildProject)
+					button(text: 'Stop build', actionPerformed: stopBuild)
+				}
+				panel() {
+					statusLabel = label(text: 'Build status')
+				}
+			}
+		}
 	}
 
 	@Override
 	public void receiveOutput(String line) {
 		// append new line
-		swing.edt{ rawOutput.append(line+'\n') }
+		swing.edt { rawOutput.append(line + '\n') }
 	}
 
 	@Override
 	public void receiveStatus(MvnBuildStatus status) {
-		swing.edt{
+		swing.edt {
 			// change table data and force redraw of the table
 			statusTable.model.rowsModel.value = status.modulesStatus
 			statusTable.model.fireTableDataChanged()
@@ -114,7 +108,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	@Override
 	public void receiveBuildLaunched(MvnBuild build) {
 		// update status bar
-		swing.edt{statusLabel.text = "Building $build.goals on $build.pomFile.absolutePath"}
+		swing.edt { statusLabel.text = "Building $build.goals on $build.pomFile.absolutePath" }
 	}
 
 	// Package protected ---------------------------------------------
@@ -124,7 +118,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 	/**
 	 * Clean the GUI and leave it as it starts
 	 */
-	protected void cleanGui(){
+	protected void cleanGui() {
 		rawOutput.text = ''
 		watcher.newBuild()
 		updateStatus()
@@ -132,10 +126,10 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 
 	/**
 	 * Returns the file of the directory in which the file choosers must start
-	 * 
+	 *
 	 * @return the file of the directory in which the file choosers must start
 	 */
-	protected File getStartingDir(){
+	protected File getStartingDir() {
 		// defaults to the executing directory
 		return new File('.')
 	}
@@ -162,7 +156,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 			File buildDir = fc.getSelectedFile()
 			cleanGui()
 			swing.doOutside {
-				launcher.launchBuild(new MvnBuild(directory:buildDir))
+				launcher.launchBuild(new MvnBuild(directory: buildDir))
 			}
 		}
 	}
@@ -176,7 +170,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener{
 			File file = fc.getSelectedFile()
 			cleanGui()
 			swing.doOutside {
-				launcher.launchBuildProject(new MavenBuildProjectFile(file:file))
+				launcher.launchBuildProject(new MavenBuildProjectFile(file: file))
 			}
 		}
 	}
