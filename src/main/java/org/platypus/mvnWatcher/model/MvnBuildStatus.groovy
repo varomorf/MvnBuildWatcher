@@ -63,7 +63,11 @@ class MvnBuildStatus {
 		}
 	}
 
-	// Package protected ---------------------------------------------
+    @Override
+    String toString() {
+        "${modulesStatus.size()} modules"
+    }
+// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
 

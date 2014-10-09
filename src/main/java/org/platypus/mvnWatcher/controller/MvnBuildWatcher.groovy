@@ -21,6 +21,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	static final String BUILDING_PART = '[INFO] Building '
 	static final String BUILD_SUCCESS = '[INFO] BUILD SUCCESS'
 	static final def PACKAGE_FILE_PART = /.+\.[tj]ar.*/
+    static final def ARCHETYPE_JAR_PART = /.*Building archetype jar.*/
 
 	// Attributes ----------------------------------------------------
 
@@ -56,7 +57,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 		if(line.contains(BUILD_SUCCESS)){
 			status.buildCorrect = true
 		}
-		statusListener.receiveStatus(status)
+		statusListener?.receiveStatus(status)
 	}
 
 	@Override
@@ -83,6 +84,15 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 		int lastWhite = ret.lastIndexOf(' ')
 		return ret - ret[lastWhite..-1]
 	}
+
+    /**
+     * Checks whether the passed line should be filtered or not
+     * @param line the line to be checked
+     * @return <code>true</code> if the line should be filtered. <code>false</code> otherwise
+     */
+    private boolean isFiltered(String line){
+        line ==~ PACKAGE_FILE_PART || line ==~ ARCHETYPE_JAR_PART
+    }
 
 	// Inner classes -------------------------------------------------
 
@@ -117,7 +127,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener{
 	 * @param line The line to analyze
 	 */
 	def setBuildingModule = { MvnBuildStatus status, String line  ->
-		if(line.contains(BUILDING_PART) && !(line ==~ PACKAGE_FILE_PART)){
+		if(line.contains(BUILDING_PART) && !isFiltered(line)){
 			status.setBuildingModule(cleanBuiltEntryText(line))
 		}
 	}

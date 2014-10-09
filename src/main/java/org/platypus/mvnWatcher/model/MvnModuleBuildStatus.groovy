@@ -66,7 +66,12 @@ class MvnModuleBuildStatus {
 		status = BUILT
 	}
 
-	// Package protected ---------------------------------------------
+    @Override
+    String toString() {
+        return "$moduleName : $status"
+    }
+
+    // Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
 
