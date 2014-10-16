@@ -10,9 +10,9 @@ class MvnModuleBuildStatus {
 
 	// Constants -----------------------------------------------------
 
-	static final WAITING = 'Waiting'
-	static final BUILDING = 'Building ...'
-	static final BUILT = 'Built'
+	public static final WAITING = 'Waiting'
+	public static final BUILDING = 'Building ...'
+	public static final BUILT = 'Built'
 
 	// Attributes ----------------------------------------------------
 
