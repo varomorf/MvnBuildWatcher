@@ -5,12 +5,11 @@ import org.fest.swing.fixture.FrameFixture
 import org.fest.swing.fixture.JTableFixture
 import org.platypus.mvnWatcher.model.MvnBuildStatus
 import org.platypus.mvnWatcher.model.MvnModuleBuildStatus
-import spock.lang.Shared
 import spock.lang.Specification
 
-import javax.swing.JFrame
-
-import static org.platypus.mvnWatcher.model.MvnModuleBuildStatus.*
+import static org.platypus.mvnWatcher.model.MvnModuleBuildStatus.BUILDING
+import static org.platypus.mvnWatcher.model.MvnModuleBuildStatus.BUILT
+import static org.platypus.mvnWatcher.model.MvnModuleBuildStatus.WAITING
 import static org.platypus.mvnWatcher.view.MvnWatcherGui.COLUMN_NAME
 import static org.platypus.mvnWatcher.view.MvnWatcherGui.COLUMN_STATUS
 
@@ -24,19 +23,15 @@ class MvnWatcherGuiTest extends Specification {
 	// Fixture Methods -----------------------------------------------
 
 	/**The GUI object*/
-	@Shared MvnWatcherGui gui
+	MvnWatcherGui gui
 
 	/**The frame fixture*/
-	@Shared FrameFixture window
+	FrameFixture window
 
 	def setup() {
-		if (!gui && !window) {
-			gui = new MvnWatcherGui()
-			JFrame frame = gui.createGui()
-			frame.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
-			window = new FrameFixture(frame)
-			window.show()
-		}
+		gui = new MvnWatcherGui()
+		window = new FrameFixture(gui.createGui())
+		window.show()
 	}
 
 	// Feature Methods -----------------------------------------------
@@ -60,18 +55,6 @@ class MvnWatcherGuiTest extends Specification {
 		rowWithData(table, 1, moduleName2, BUILDING)
 		and: 'the first row has the module name in it and status waiting'
 		rowWithData(table, 2, moduleName3, WAITING)
-	}
-
-	def 'testin'() {
-		when:
-		int i = a + b
-		then:
-		i == c
-		where:
-		a || b || c
-		1 || 2 || 3
-		2 || 1 || 3
-		2 || 2 || 4
 	}
 
 	// Helper Methods ------------------------------------------------
