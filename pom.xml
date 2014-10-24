@@ -13,13 +13,16 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<gmavenVersion>1.5</gmavenVersion>
+		<gmavenProviderSelection>2.0</gmavenProviderSelection>
+		<groovyVersion>2.3.6</groovyVersion>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-			<version>2.3.6</version>
+			<version>${groovyVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
@@ -58,71 +61,30 @@
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<version>${gmavenVersion}</version>
 				<configuration>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>true</downloadJavadocs>
-					<additionalBuildcommands>
-						<buildCommand>
-							<name>org.codehaus.groovy.eclipse.groovyBuilder</name>
-						</buildCommand>
-					</additionalBuildcommands>
-					<additionalProjectnatures>
-						<projectnature>org.eclipse.jdt.groovy.core.groovyNature</projectnature>
-					</additionalProjectnatures>
-					<useProjectReferences>true</useProjectReferences>
-					<sourceIncludes>
-						<sourceInclude>**/*.groovy</sourceInclude>
-					</sourceIncludes>
-					<wtpversion>2.0</wtpversion>
+					<providerSelection>${gmavenProviderSelection}</providerSelection>
+					<sourceEncoding>UTF-8</sourceEncoding>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
 				<executions>
 					<execution>
-						<id>default-testCompile</id>
-						<phase>test-compile</phase>
 						<goals>
+							<goal>generateStubs</goal>
+							<goal>compile</goal>
+							<goal>generateTestStubs</goal>
 							<goal>testCompile</goal>
 						</goals>
-						<configuration>
-							<compilerId>groovy-eclipse-compiler</compilerId>
-							<source>1.7</source>
-							<target>1.7</target>
-							<encoding>UTF-8</encoding>
-						</configuration>
-					</execution>
-					<execution>
-						<id>default-compile</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<compilerId>groovy-eclipse-compiler</compilerId>
-							<source>1.7</source>
-							<target>1.7</target>
-							<encoding>UTF-8</encoding>
-						</configuration>
 					</execution>
 				</executions>
 				<dependencies>
 					<dependency>
 						<groupId>org.codehaus.groovy</groupId>
-						<artifactId>groovy-eclipse-compiler</artifactId>
-						<version>2.6.0-01</version>
-						<scope>compile</scope>
+						<artifactId>groovy-all</artifactId>
+						<version>${groovyVersion}</version>
 					</dependency>
 				</dependencies>
-				<configuration>
-					<compilerId>groovy-eclipse-compiler</compilerId>
-					<source>1.7</source>
-					<target>1.7</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-enforcer-plugin</artifactId>
