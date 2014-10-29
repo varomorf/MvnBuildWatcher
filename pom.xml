@@ -59,6 +59,7 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
+		<sourceDirectory>src/main/groovy</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.gmaven</groupId>
