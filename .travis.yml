@@ -2,19 +2,6 @@ language: groovy
 jdk:
   - oraclejdk7
   - openjdk7
-env:
-  global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "LpXQbJCkbQlwz+2YV7hL31MF9VZtsciU6i7d3aCGSp00YdowOCtZTJxcptUgFiAaTFUCkdZGZO/lUkLQoeQk/hAMAk/2BtHvUwbFTdHIy2aSh0eM9vkgJicocBAqZhHwKV7hJ7w5wtbn6QCHnxzNrNZrwzPnTt+j1Dpa/ymldjE="
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-addons:
-  coverity_scan:
-    project:
-      name: "varomorf/MvnBuildWatcher"
-      description: "Build submitted via Travis CI"
-    notification_email: varomorf@gmail.com
-    build_command_prepend: "mvn clean"
-    build_command:   "mvn -DskipTests=true compile"
