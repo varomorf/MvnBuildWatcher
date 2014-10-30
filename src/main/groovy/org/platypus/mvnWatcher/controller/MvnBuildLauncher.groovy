@@ -92,10 +92,6 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 		killBuildProcess()
 		if (projectThread) {
 			projectThread.interrupt()
-		} else {
-			if (buildThread) {
-				buildThread.interrupt()
-			}
 		}
 	}
 
