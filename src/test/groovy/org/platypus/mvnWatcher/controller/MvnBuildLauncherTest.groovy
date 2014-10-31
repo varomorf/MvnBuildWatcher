@@ -32,7 +32,7 @@ class MvnBuildLauncherTest extends Specification {
 		def projectFile = new MavenBuildProjectFile(file: new File(GOOD_TEST_FILE))
 		when: 'a build is launched for the project file'
 		builder.launchBuildProject(projectFile)
-		sleep(10000)
+		sleep(20000)
 		then: 'the status has 2 correct builds'
 		status.modulesStatus.size == 2
 		status.modulesStatus[0].building//TODO at some point this should say built
@@ -46,7 +46,7 @@ class MvnBuildLauncherTest extends Specification {
 		file.readLines().size == 2
 		when: 'a build is launched for the project file'
 		builder.launchBuildProject(projectFile)
-		sleep(5000)
+		sleep(15000)
 		then: 'only the first build has been added'
 		status.modulesStatus.size == 1
 		status.modulesStatus[0].building//TODO at some point this should say failed
