@@ -15,13 +15,15 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 
 	// Constants -----------------------------------------------------
 
-	static final String START_OF_LIST = '[INFO] Reactor Build Order:'
-	static final String END_OF_LIST = '[INFO] ------------------------------------------------------------------------'
-	static final String INFO_PART = '[INFO] '
-	static final String BUILDING_PART = '[INFO] Building '
-	static final String BUILD_SUCCESS = '[INFO] BUILD SUCCESS'
-	static final def PACKAGE_FILE_PART = /.+\.[tj]ar.*/
-	static final def ARCHETYPE_JAR_PART = /.*Building archetype jar.*/
+	public static final String START_OF_LIST = '[INFO] Reactor Build Order:'
+	public static
+	final String END_OF_LIST = '[INFO] ------------------------------------------------------------------------'
+	public static final String INFO_PART = '[INFO] '
+	public static final String ERROR_PART = '[ERROR] '
+	public static final String BUILDING_PART = '[INFO] Building '
+	public static final String BUILD_SUCCESS = '[INFO] BUILD SUCCESS'
+	public static final def PACKAGE_FILE_PART = /.+\.[tj]ar.*/
+	public static final def ARCHETYPE_JAR_PART = /.*Building archetype jar.*/
 
 	// Attributes ----------------------------------------------------
 
@@ -62,7 +64,8 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 
 	@Override
 	public void receiveBuildLaunched(MvnBuild build) {
-		// NOOP
+		// set the status to the starting build
+		build.status = status
 	}
 
 	// Package protected ---------------------------------------------
@@ -154,6 +157,11 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 		// check for finalization
 		if (line.contains(BUILD_SUCCESS)) {
 			status.buildCorrect = true
+		}
+
+		// check for build failures
+		if (line.contains(ERROR_PART)) {
+			status.fail(line)
 		}
 	}
 

@@ -4,6 +4,7 @@ import com.jezhumble.javasysmon.JavaSysMon
 import com.jezhumble.javasysmon.OsProcess
 import org.apache.maven.shared.invoker.DefaultInvoker
 import org.apache.maven.shared.invoker.InvocationOutputHandler
+import org.apache.maven.shared.invoker.InvocationResult
 import org.apache.maven.shared.invoker.Invoker
 import org.platypus.mvnWatcher.listener.MvnBuildOutputListener
 import org.platypus.mvnWatcher.model.MavenBuildProjectFile
@@ -20,7 +21,8 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 
 	// Constants -----------------------------------------------------
 
-	static final String JAVA_EXE = 'java.exe'
+	public static final String JAVA_EXE = 'java.exe'
+	public static final int CORRECT_EXECUTION = 0
 
 	// Attributes ----------------------------------------------------
 
@@ -51,7 +53,12 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 			try {
 				Invoker invoker = new DefaultInvoker()
 				invoker.setOutputHandler(this)
-				invoker.execute(build)
+				InvocationResult result = invoker.execute(build)
+				if (result.exitCode != CORRECT_EXECUTION) {
+					println result.exitCode
+					println result.executionException ?: ''
+//TODO treat execution result correctly to show it to the user
+				}
 			} catch (InterruptedException ignored) {
 				// re-assert interrupt
 				Thread.currentThread().interrupt()
@@ -69,13 +76,17 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 	public void launchBuildProject(final MavenBuildProjectFile buildProjectFile) {
 		projectThread = Thread.start {
 			try {
-				buildProjectFile.builds.each { build ->
+				for (build in buildProjectFile.builds) {
 					Thread buildThread = launchBuild(build)
 					// inform of new build launched
 					listeners.each { it.receiveBuildLaunched(build) }
 					synchronized (buildThread) {
 						// wait until finished
 						buildThread.wait()
+					}
+					if (build.status.failed) {
+						// current build failed -> no more builds are done
+						break
 					}
 				}
 			} catch (InterruptedException ignored) {
@@ -92,10 +103,6 @@ class MvnBuildLauncher implements InvocationOutputHandler {
 		killBuildProcess()
 		if (projectThread) {
 			projectThread.interrupt()
-		} else {
-			if (buildThread) {
-				buildThread.interrupt()
-			}
 		}
 	}
 

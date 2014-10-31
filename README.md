@@ -1,7 +1,7 @@
 MvnBuildWatcher
 ===============
 
-A simple GUI for executing/watching big MVN builds by analyzing the output.
+A simple GUI for executing/watching big MVN builds by analyzing its output.
 
 It relies on the 'M2_HOME environment' variable meaning it MUST be defined it for it to work 
 properly (although you'll be able to override it via properties).

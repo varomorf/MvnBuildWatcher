@@ -1,5 +1,6 @@
 package org.platypus.mvnWatcher.controller
 
+import org.platypus.mvnWatcher.model.MvnBuild
 import org.platypus.mvnWatcher.model.MvnBuildStatus
 import spock.lang.Specification
 
@@ -59,6 +60,42 @@ class MvnBuildWatcherTest extends Specification {
 		watcher.setBuildingModule(status, '[INFO] Building archetype jar: ')
 		then: 'there should be no new modules'
 		status.modulesStatus.size() == 1
+	}
+
+	def 'should recognize when a build fails'(){
+		given: 'watcher has already read the list of modules'
+		watcher.listRead = true
+		and: 'a line with build failure info'
+		def line = '[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test) on project org.foo.bar.xyz: There are test failures.'
+		when: 'watcher receives the build failure line'
+		watcher.receiveOutput(line)
+		then: 'status set as failed'
+		def buildStatus = watcher.status
+		buildStatus.failed
+		and: 'fail info is correclty retrieved'
+		buildStatus.failure.failedGoal == 'org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test)'
+		buildStatus.failure.failedModule == 'org.foo.bar.xyz'
+		buildStatus.failure.failReason == 'There are test failures.'
+		when: 'watcher receives new error line'
+		def anotherLine = '[ERROR] this must not be analyzed as an error'
+		watcher.receiveOutput(anotherLine)
+		then: 'status remains the same'
+		buildStatus.failed
+		and: 'fail info is correclty retrieved'
+		buildStatus.failure.failedGoal == 'org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test)'
+		buildStatus.failure.failedModule == 'org.foo.bar.xyz'
+		buildStatus.failure.failReason == 'There are test failures.'
+	}
+
+	def 'shouldSetTheStatusToABuildWhenNotifiedOfItsBegin'(){
+		given: 'the watcher is ready for a new build'
+		watcher.newBuild()
+		and: 'a maven build'
+		def build = new MvnBuild()
+		when: 'the watcher is notified of the start of the build'
+		watcher.receiveBuildLaunched(build)
+		then: 'the watcher sets its status to the build'
+		watcher.status == build.status
 	}
 
 	// Helper Methods ------------------------------------------------

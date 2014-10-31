@@ -11,6 +11,7 @@ import org.platypus.mvnWatcher.model.MvnBuild
 import org.platypus.mvnWatcher.model.MvnBuildStatus
 
 import javax.swing.*
+import java.awt.*
 
 /**
  * Main window for the Maven Watcher app
@@ -21,6 +22,9 @@ import javax.swing.*
 class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 
 	// Constants -----------------------------------------------------
+
+	public static final String COLUMN_NAME = 'Name'
+	public static final String COLUMN_STATUS = 'Status'
 
 	// Attributes ----------------------------------------------------
 
@@ -42,6 +46,9 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 	/**Swing builder to use for this GUI*/
 	SwingBuilder swing = new SwingBuilder()
 
+	/**The GUI frame*/
+	Frame frame
+
 	// Static --------------------------------------------------------
 
 	// Constructors --------------------------------------------------
@@ -61,30 +68,39 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 	 * Creates and shows the main GUI for the app
 	 */
 	public void showGui() {
+		createGui()
+		frame.pack()
+		frame.visible = true
+	}
+
+	/**
+	 * Creates the main GUI for the app, and so initializes the frame field
+	 */
+	public JFrame createGui() {
 		def mainLayout = new MigLayout('fill, gap 0!', '[]', '[87%!][grow][shrink]')
 		def statusLayout = new MigLayout('fill', '[300:600:50%][300:600:50%]', '[]')
 		//noinspection GroovyAssignabilityCheck
-		swing.frame(title: 'MVN Build Watcher', visible: true, pack: true, windowClosing: closing,
+		frame = swing.frame(id: 'frame', title: 'MVN Build Watcher', windowClosing: closing,
 				preferredSize: [800, 600], defaultCloseOperation: JFrame.EXIT_ON_CLOSE) {
 			panel(layout: mainLayout) {
 				panel(layout: statusLayout, constraints: 'grow, wrap') {
 					scrollPane(constraints: 'grow') { rawOutput = textArea() }
 					scrollPane(constraints: 'grow') {
-						statusTable = table() {
+						statusTable = table(id: 'statusTable') {
 							tableModel() {
-								closureColumn(header: 'Name', read: { row -> return row.moduleName })
-								closureColumn(header: 'Status', read: { row -> return row.status })
+								closureColumn(header: COLUMN_NAME, read: { row -> return row.moduleName })
+								closureColumn(header: COLUMN_STATUS, read: { row -> return row.status })
 							}
 						}
 					}
 				}
 				panel(constraints: 'center, wrap') {
-					button(text: 'Launch build on dir', actionPerformed: launchBuild)
-					button(text: 'Launch build project', actionPerformed: launchBuildProject)
-					button(text: 'Stop build', actionPerformed: stopBuild)
+					button(id: 'lauchBuildOnDirButton', text: 'Launch build on dir', actionPerformed: launchBuild)
+					button(id: 'launchProjectButton', text: 'Launch build project', actionPerformed: launchBuildProject)
+					button(id: 'stopBuildButton', text: 'Stop build', actionPerformed: stopBuild)
 				}
 				panel() {
-					statusLabel = label(text: 'Build status')
+					statusLabel = label(id: 'statusLabel', text: 'Build status')
 				}
 			}
 		}
@@ -102,6 +118,9 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 			// change table data and force redraw of the table
 			statusTable.model.rowsModel.value = status.modulesStatus
 			statusTable.model.fireTableDataChanged()
+			if(status.failed){
+				statusLabel.text = status.failure
+			}
 		}
 	}
 

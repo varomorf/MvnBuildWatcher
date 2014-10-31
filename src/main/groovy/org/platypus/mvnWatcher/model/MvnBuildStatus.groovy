@@ -18,6 +18,9 @@ class MvnBuildStatus {
 	/**Flag to mark whether the build is correct or not*/
 	boolean buildCorrect = false
 
+	/**The failure data of the build (if any)*/
+	MvnBuildFailure failure
+
 	// Static --------------------------------------------------------
 
 	// Constructors --------------------------------------------------
@@ -62,11 +65,30 @@ class MvnBuildStatus {
 		}
 	}
 
+	/**
+	 * Returns whether the build has failed or not.
+	 * @return <code>true</code> the build has failed. <code>false</code> otherwise.
+	 */
+	public boolean isFailed(){
+		failure
+	}
+
+	/**
+	 * Makes the build status as failed with the data from the passed line. If the line does not represent a valid
+	 * failure, the previous failure (if any) will be preserved.
+	 *
+	 * @param line the line that must contain the failure data
+	 */
+	public void fail(String line){
+		failure = MvnBuildFailure.createFromLine(line)?:failure
+	}
+
 	@Override
 	String toString() {
 		"${modulesStatus.size()} modules"
 	}
-// Package protected ---------------------------------------------
+
+	// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
 
