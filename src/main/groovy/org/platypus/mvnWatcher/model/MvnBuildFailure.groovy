@@ -40,7 +40,11 @@ class MvnBuildFailure {
 		return null
 	}
 
-	// Constructors --------------------------------------------------
+	@Override
+	String toString() {
+		"Build failed on module $failedModule when performing $failedGoal because of $failReason"
+	}
+// Constructors --------------------------------------------------
 
 	// Public --------------------------------------------------------
 

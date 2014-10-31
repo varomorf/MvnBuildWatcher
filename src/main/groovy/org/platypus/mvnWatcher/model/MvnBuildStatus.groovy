@@ -74,11 +74,13 @@ class MvnBuildStatus {
 	}
 
 	/**
-	 * Makes the build status as failed with the data from the passed line.
+	 * Makes the build status as failed with the data from the passed line. If the line does not represent a valid
+	 * failure, the previous failure (if any) will be preserved.
+	 *
 	 * @param line the line that must contain the failure data
 	 */
 	public void fail(String line){
-		failure = MvnBuildFailure.createFromLine(line)
+		failure = MvnBuildFailure.createFromLine(line)?:failure
 	}
 
 	@Override
