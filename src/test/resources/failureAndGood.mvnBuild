@@ -1,0 +1,2 @@
+target/test-classes/testProjects/failure/;clean test
+target/test-classes/testProjects/good/;clean test

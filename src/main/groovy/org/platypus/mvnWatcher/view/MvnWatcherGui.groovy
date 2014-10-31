@@ -100,7 +100,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 					button(id: 'stopBuildButton', text: 'Stop build', actionPerformed: stopBuild)
 				}
 				panel() {
-					statusLabel = label(text: 'Build status')
+					statusLabel = label(id: 'statusLabel', text: 'Build status')
 				}
 			}
 		}
@@ -118,6 +118,9 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 			// change table data and force redraw of the table
 			statusTable.model.rowsModel.value = status.modulesStatus
 			statusTable.model.fireTableDataChanged()
+			if(status.failed){
+				statusLabel.text = status.failure
+			}
 		}
 	}
 

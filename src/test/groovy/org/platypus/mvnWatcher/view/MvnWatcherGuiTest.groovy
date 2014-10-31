@@ -34,6 +34,10 @@ class MvnWatcherGuiTest extends Specification {
 		window.show()
 	}
 
+	def cleanup(){
+		window.cleanUp()
+	}
+
 	// Feature Methods -----------------------------------------------
 
 	def 'should update the status table when receiving a status update from the watcher'() {
@@ -55,6 +59,16 @@ class MvnWatcherGuiTest extends Specification {
 		rowWithData(table, 1, moduleName2, BUILDING)
 		and: 'the first row has the module name in it and status waiting'
 		rowWithData(table, 2, moduleName3, WAITING)
+	}
+
+	def 'shouldUpdateStatusLabelWhenBuildFailureOccurs'(){
+		given: 'a failed build status for module foo, goal bar and reason xyz'
+		def status = new MvnBuildStatus()
+		status.fail '[ERROR] Failed to execute goal bar on project foo: xyz.'
+		when: 'the GUI receives the failed status'
+		gui.receiveStatus(status)
+		then: 'the status label shows the failed message'
+		window.label('statusLabel').text() == status.failure.toString()
 	}
 
 	// Helper Methods ------------------------------------------------

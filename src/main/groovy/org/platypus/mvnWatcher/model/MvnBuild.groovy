@@ -24,6 +24,9 @@ class MvnBuild extends DefaultInvocationRequest {
 
 	// Attributes ----------------------------------------------------
 
+	/**The status of the build*/
+	MvnBuildStatus status
+
 	// Static --------------------------------------------------------
 
 	// Constructors --------------------------------------------------
