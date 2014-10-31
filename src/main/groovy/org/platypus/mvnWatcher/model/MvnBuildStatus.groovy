@@ -18,6 +18,15 @@ class MvnBuildStatus {
 	/**Flag to mark whether the build is correct or not*/
 	boolean buildCorrect = false
 
+	/**The name of the module that has caused the build to fail*/
+	String failedModule
+
+	/**The goal that failed*/
+	String failedGoal
+
+	/**The reason why the goal failed*/
+	String failReason
+
 	// Static --------------------------------------------------------
 
 	// Constructors --------------------------------------------------
@@ -62,11 +71,20 @@ class MvnBuildStatus {
 		}
 	}
 
+	/**
+	 * Returns whether the build has failed or not.
+	 * @return <code>true</code> the build has failed. <code>false</code> otherwise.
+	 */
+	public boolean isFailed(){
+		failedModule
+	}
+
 	@Override
 	String toString() {
 		"${modulesStatus.size()} modules"
 	}
-// Package protected ---------------------------------------------
+
+	// Package protected ---------------------------------------------
 
 	// Protected -----------------------------------------------------
 

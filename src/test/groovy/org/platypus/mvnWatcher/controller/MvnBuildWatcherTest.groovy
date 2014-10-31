@@ -61,6 +61,22 @@ class MvnBuildWatcherTest extends Specification {
 		status.modulesStatus.size() == 1
 	}
 
+	def 'should recognize when a build fails'(){
+		given: 'watcher has already read the list of modules'
+		watcher.listRead = true
+		and: 'a line with build failure info'
+		def line = '[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test) on project org.foo.bar.xyz: There are test failures.'
+		when: 'watcher receives the build failure line'
+		watcher.receiveOutput(line)
+		then: 'status set as failed'
+		def buildStatus = watcher.status
+		buildStatus.failed
+		and: 'fail info is correclty retrieved'
+		buildStatus.failedGoal == 'org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test)'
+		buildStatus.failedModule == 'org.foo.bar.xyz'
+		buildStatus.failReason == 'There are test failures.'
+	}
+
 	// Helper Methods ------------------------------------------------
 
 }

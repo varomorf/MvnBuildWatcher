@@ -18,10 +18,12 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 	static final String START_OF_LIST = '[INFO] Reactor Build Order:'
 	static final String END_OF_LIST = '[INFO] ------------------------------------------------------------------------'
 	static final String INFO_PART = '[INFO] '
+	static final String ERROR_PART = '[ERROR] '
 	static final String BUILDING_PART = '[INFO] Building '
 	static final String BUILD_SUCCESS = '[INFO] BUILD SUCCESS'
 	static final def PACKAGE_FILE_PART = /.+\.[tj]ar.*/
 	static final def ARCHETYPE_JAR_PART = /.*Building archetype jar.*/
+	static final def FAILED_MODULE_REGEX = /\[ERROR\] Failed to execute goal (.+) on project (.+): (.+)/
 
 	// Attributes ----------------------------------------------------
 
@@ -154,6 +156,15 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 		// check for finalization
 		if (line.contains(BUILD_SUCCESS)) {
 			status.buildCorrect = true
+		}
+
+		// check for errors
+		if(line.contains(ERROR_PART)){
+			def matcher = (line =~ FAILED_MODULE_REGEX)
+			matcher.find()
+			status.failedGoal = matcher.group(1)
+			status.failedModule = matcher.group(2)
+			status.failReason = matcher.group(3)
 		}
 	}
 
