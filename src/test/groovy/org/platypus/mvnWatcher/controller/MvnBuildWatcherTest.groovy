@@ -1,5 +1,6 @@
 package org.platypus.mvnWatcher.controller
 
+import org.platypus.mvnWatcher.model.MvnBuild
 import org.platypus.mvnWatcher.model.MvnBuildStatus
 import spock.lang.Specification
 
@@ -75,6 +76,17 @@ class MvnBuildWatcherTest extends Specification {
 		buildStatus.failure.failedGoal == 'org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test)'
 		buildStatus.failure.failedModule == 'org.foo.bar.xyz'
 		buildStatus.failure.failReason == 'There are test failures.'
+	}
+
+	def 'shouldSetTheStatusToABuildWhenNotifiedOfItsBegin'(){
+		given: 'the watcher is ready for a new build'
+		watcher.newBuild()
+		and: 'a maven build'
+		def build = new MvnBuild()
+		when: 'the watcher is notified of the start of the build'
+		watcher.receiveBuildLaunched(build)
+		then: 'the watcher sets its status to the build'
+		watcher.status == build.status
 	}
 
 	// Helper Methods ------------------------------------------------

@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils
 import org.platypus.mvnWatcher.listener.MvnBuildOutputListener
 import org.platypus.mvnWatcher.listener.MvnBuildStatusListener
 import org.platypus.mvnWatcher.model.MvnBuild
-import org.platypus.mvnWatcher.model.MvnBuildFailure
 import org.platypus.mvnWatcher.model.MvnBuildStatus
 
 /**
@@ -65,7 +64,8 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 
 	@Override
 	public void receiveBuildLaunched(MvnBuild build) {
-		// NOOP
+		// set the status to the starting build
+		build.status = status
 	}
 
 	// Package protected ---------------------------------------------
@@ -159,7 +159,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 			status.buildCorrect = true
 		}
 
-		// check for errors
+		// check for build failures
 		if (line.contains(ERROR_PART)) {
 			status.fail(line)
 		}
