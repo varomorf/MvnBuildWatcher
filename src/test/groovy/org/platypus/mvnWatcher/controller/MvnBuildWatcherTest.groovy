@@ -72,9 +72,9 @@ class MvnBuildWatcherTest extends Specification {
 		def buildStatus = watcher.status
 		buildStatus.failed
 		and: 'fail info is correclty retrieved'
-		buildStatus.failedGoal == 'org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test)'
-		buildStatus.failedModule == 'org.foo.bar.xyz'
-		buildStatus.failReason == 'There are test failures.'
+		buildStatus.failure.failedGoal == 'org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test)'
+		buildStatus.failure.failedModule == 'org.foo.bar.xyz'
+		buildStatus.failure.failReason == 'There are test failures.'
 	}
 
 	// Helper Methods ------------------------------------------------

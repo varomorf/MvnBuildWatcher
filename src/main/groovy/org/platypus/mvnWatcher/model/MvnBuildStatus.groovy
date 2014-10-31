@@ -18,14 +18,8 @@ class MvnBuildStatus {
 	/**Flag to mark whether the build is correct or not*/
 	boolean buildCorrect = false
 
-	/**The name of the module that has caused the build to fail*/
-	String failedModule
-
-	/**The goal that failed*/
-	String failedGoal
-
-	/**The reason why the goal failed*/
-	String failReason
+	/**The failure data of the build (if any)*/
+	MvnBuildFailure failure
 
 	// Static --------------------------------------------------------
 
@@ -76,7 +70,15 @@ class MvnBuildStatus {
 	 * @return <code>true</code> the build has failed. <code>false</code> otherwise.
 	 */
 	public boolean isFailed(){
-		failedModule
+		failure
+	}
+
+	/**
+	 * Makes the build status as failed with the data from the passed line.
+	 * @param line the line that must contain the failure data
+	 */
+	public void fail(String line){
+		failure = MvnBuildFailure.createFromLine(line)
 	}
 
 	@Override
