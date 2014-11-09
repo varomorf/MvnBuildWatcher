@@ -3,6 +3,7 @@ package org.platypus.mvnWatcher.view
 import org.fest.swing.data.TableCellByColumnId
 import org.fest.swing.fixture.FrameFixture
 import org.fest.swing.fixture.JTableFixture
+import org.platypus.mvnWatcher.model.MvnBuild
 import org.platypus.mvnWatcher.model.MvnBuildStatus
 import org.platypus.mvnWatcher.model.MvnModuleBuildStatus
 import spock.lang.Specification
@@ -12,6 +13,10 @@ import static org.platypus.mvnWatcher.model.MvnModuleBuildStatus.BUILT
 import static org.platypus.mvnWatcher.model.MvnModuleBuildStatus.WAITING
 import static org.platypus.mvnWatcher.view.MvnWatcherGui.COLUMN_NAME
 import static org.platypus.mvnWatcher.view.MvnWatcherGui.COLUMN_STATUS
+import static org.platypus.mvnWatcher.view.MvnWatcherGui.ICON_STATUS_LABEL
+import static org.platypus.mvnWatcher.view.MvnWatcherGui.RUNNING_ICON_URL
+import static org.platypus.mvnWatcher.view.MvnWatcherGui.STATUS_LABEL
+import static org.platypus.mvnWatcher.view.MvnWatcherGui.STOP_ICON_URL
 
 /**
  * Created by alfergon on 09/10/2014.
@@ -20,15 +25,19 @@ class MvnWatcherGuiTest extends Specification {
 
 	// Fields --------------------------------------------------------
 
-	// Fixture Methods -----------------------------------------------
-
 	/**The GUI object*/
 	MvnWatcherGui gui
 
 	/**The frame fixture*/
 	FrameFixture window
 
+    /**A default build*/
+    MvnBuild defaultBuild = new MvnBuild()
+
+	// Fixture Methods -----------------------------------------------
+
 	def setup() {
+        defaultBuild.directory = new File('/')
 		gui = new MvnWatcherGui()
 		window = new FrameFixture(gui.createGui())
 		window.show()
@@ -65,11 +74,29 @@ class MvnWatcherGuiTest extends Specification {
 		given: 'a failed build status for module foo, goal bar and reason xyz'
 		def status = new MvnBuildStatus()
 		status.fail '[ERROR] Failed to execute goal bar on project foo: xyz.'
+        and: 'a build was running'
+        gui.receiveBuildLaunched(defaultBuild)
 		when: 'the GUI receives the failed status'
 		gui.receiveStatus(status)
 		then: 'the status label shows the failed message'
-		window.label('statusLabel').text() == status.failure.toString()
+		window.label(STATUS_LABEL).requireText(status.failure.toString())
+        and: 'stop icon is shown'
+        window.label(ICON_STATUS_LABEL).component().icon.location.path.contains(STOP_ICON_URL)
 	}
+
+    def 'shouldShowNoActiveBuildAndStopIconWhenStarted'(){
+        expect: 'build status shows no active build'
+        window.label(STATUS_LABEL).requireText('No active build running.')
+        and: 'stop icon is shown'
+        window.label(ICON_STATUS_LABEL).component().icon.location.path.contains(STOP_ICON_URL)
+    }
+
+    def 'shouldShownRunningIconWhenBuilding'(){
+        given: 'a build was running'
+        gui.receiveBuildLaunched(defaultBuild)
+        expect: 'the running gif should be set as status icon'
+        window.label(ICON_STATUS_LABEL).component().icon.location.path.contains(RUNNING_ICON_URL)
+    }
 
 	// Helper Methods ------------------------------------------------
 
