@@ -25,8 +25,14 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 
 	public static final String COLUMN_NAME = 'Name'
 	public static final String COLUMN_STATUS = 'Status'
+    public static final String STATUS_LABEL = 'statusLabel'
+    public static final String INITIAL_BUILD_STATUS = 'No active build running.'
+    public static final String STOP_ICON_URL = 'images/stop-icon.png'
+    public static final String RUNNING_ICON_URL = 'images/running-icon.gif'
+    public static final String SUCCESS_ICON_URL = 'images/success-icon.png'
+    public static final String ICON_STATUS_LABEL = 'iconStatusLabel'
 
-	// Attributes ----------------------------------------------------
+    // Attributes ----------------------------------------------------
 
 	/**The text area in which the raw text from the output file will be shown*/
 	JTextArea rawOutput
@@ -36,6 +42,9 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 
 	/**The label in which the status messages will be shown*/
 	JLabel statusLabel
+
+    /**The label in which the build status icon will be shown*/
+    JLabel iconStatusLabel
 
 	/**File watcher instance for analysing and polling the output file from the build*/
 	MvnBuildWatcher watcher = new MvnBuildWatcher()
@@ -81,7 +90,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 		def statusLayout = new MigLayout('fill', '[300:600:50%][300:600:50%]', '[]')
 		//noinspection GroovyAssignabilityCheck
 		frame = swing.frame(id: 'frame', title: 'MVN Build Watcher', windowClosing: closing,
-				preferredSize: [800, 600], defaultCloseOperation: JFrame.EXIT_ON_CLOSE) {
+				preferredSize: [800, 655], defaultCloseOperation: JFrame.EXIT_ON_CLOSE) {
 			panel(layout: mainLayout) {
 				panel(layout: statusLayout, constraints: 'grow, wrap') {
 					scrollPane(constraints: 'grow') { rawOutput = textArea() }
@@ -95,12 +104,13 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 					}
 				}
 				panel(constraints: 'center, wrap') {
-					button(id: 'lauchBuildOnDirButton', text: 'Launch build on dir', actionPerformed: launchBuild)
+					button(id: 'launchBuildOnDirButton', text: 'Launch build on dir', actionPerformed: launchBuild)
 					button(id: 'launchProjectButton', text: 'Launch build project', actionPerformed: launchBuildProject)
 					button(id: 'stopBuildButton', text: 'Stop build', actionPerformed: stopBuild)
 				}
 				panel() {
-					statusLabel = label(id: 'statusLabel', text: 'Build status')
+                    iconStatusLabel = label(id: ICON_STATUS_LABEL, icon: stopIcon)
+					statusLabel = label(id: STATUS_LABEL, text: INITIAL_BUILD_STATUS)
 				}
 			}
 		}
@@ -118,8 +128,15 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 			// change table data and force redraw of the table
 			statusTable.model.rowsModel.value = status.modulesStatus
 			statusTable.model.fireTableDataChanged()
+			// success status update
+			if(status.buildCorrect){
+				statusLabel.text = "Building success!"
+				iconStatusLabel.icon = successIcon
+			}
+			// failed status update
 			if(status.failed){
 				statusLabel.text = status.failure
+                iconStatusLabel.icon = stopIcon
 			}
 		}
 	}
@@ -127,12 +144,11 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 	@Override
 	public void receiveBuildLaunched(MvnBuild build) {
 		// update status bar
-		swing.edt { statusLabel.text = "Building $build.goals on $build.pomFile.absolutePath" }
+		swing.edt {
+            statusLabel.text = "Building $build.goals on $build.pomFile.absolutePath"
+            iconStatusLabel.icon = runningIcon
+        }
 	}
-
-	// Package protected ---------------------------------------------
-
-	// Protected -----------------------------------------------------
 
 	/**
 	 * Clean the GUI and leave it as it starts
@@ -143,6 +159,10 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 		updateStatus()
 	}
 
+	// Package protected ---------------------------------------------
+
+	// Protected -----------------------------------------------------
+
 	/**
 	 * Returns the file of the directory in which the file choosers must start
 	 *
@@ -151,6 +171,33 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 	protected File getStartingDir() {
 		// defaults to the executing directory
 		return new File('.')
+	}
+
+    /**
+     * Returns an ImageIcon for the stop icon
+     * @return an ImageIcon for the stop icon (or null if the image is not found)
+     */
+    protected ImageIcon getStopIcon() {
+        def url = getClass().getClassLoader().getResource(STOP_ICON_URL)
+        url ? new ImageIcon(url) : null
+    }
+
+    /**
+     * Returns an ImageIcon for the running icon
+     * @return an ImageIcon for the running icon (or null if the image is not found)
+     */
+    protected ImageIcon getRunningIcon() {
+        def url = getClass().getClassLoader().getResource(RUNNING_ICON_URL)
+        url ? new ImageIcon(url) : null
+    }
+
+	/**
+	 * Returns an ImageIcon for the success icon
+	 * @return an ImageIcon for the success icon (or null if the image is not found)
+	 */
+	protected ImageIcon getSuccessIcon() {
+		def url = getClass().getClassLoader().getResource(SUCCESS_ICON_URL)
+		url ? new ImageIcon(url) : null
 	}
 
 	// Private -------------------------------------------------------

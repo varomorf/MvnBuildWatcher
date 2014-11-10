@@ -62,7 +62,7 @@ class MvnBuildWatcherTest extends Specification {
 		status.modulesStatus.size() == 1
 	}
 
-	def 'should recognize when a build fails'(){
+	def 'should recognize when a build fails'() {
 		given: 'watcher has already read the list of modules'
 		watcher.listRead = true
 		and: 'a line with build failure info'
@@ -72,7 +72,7 @@ class MvnBuildWatcherTest extends Specification {
 		then: 'status set as failed'
 		def buildStatus = watcher.status
 		buildStatus.failed
-		and: 'fail info is correclty retrieved'
+		and: 'fail info is correctly retrieved'
 		buildStatus.failure.failedGoal == 'org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test)'
 		buildStatus.failure.failedModule == 'org.foo.bar.xyz'
 		buildStatus.failure.failReason == 'There are test failures.'
@@ -81,13 +81,15 @@ class MvnBuildWatcherTest extends Specification {
 		watcher.receiveOutput(anotherLine)
 		then: 'status remains the same'
 		buildStatus.failed
-		and: 'fail info is correclty retrieved'
+		and: 'status is not of correct build'
+		!buildStatus.buildCorrect
+		and: 'fail info is correct retrieved'
 		buildStatus.failure.failedGoal == 'org.apache.maven.plugins:maven-surefire-plugin:2.14:test (default-test)'
 		buildStatus.failure.failedModule == 'org.foo.bar.xyz'
 		buildStatus.failure.failReason == 'There are test failures.'
 	}
 
-	def 'shouldSetTheStatusToABuildWhenNotifiedOfItsBegin'(){
+	def 'shouldSetTheStatusToABuildWhenNotifiedOfItsBegin'() {
 		given: 'the watcher is ready for a new build'
 		watcher.newBuild()
 		and: 'a maven build'
@@ -96,6 +98,47 @@ class MvnBuildWatcherTest extends Specification {
 		watcher.receiveBuildLaunched(build)
 		then: 'the watcher sets its status to the build'
 		watcher.status == build.status
+	}
+
+	def 'shouldRecognizeWhenABuildEndsCorrectly'() {
+		given: 'the watcher is ready for a new build'
+		watcher.newBuild()
+		and: 'a line of build success'
+		def line = '[INFO] BUILD SUCCESS'
+		when: 'the watcher receives that line'
+		watcher.receiveOutput(line)
+		then: 'the status is of correct build'
+		watcher.status.buildCorrect
+	}
+
+	def 'shouldNoLongerShowCorrectBuildIfModulesListIsDetected'() {
+		given: 'the watcher is ready for a new build'
+		watcher.newBuild()
+		and: 'a line of build success'
+		def line = '[INFO] BUILD SUCCESS'
+		when: 'the watcher receives that line'
+		watcher.receiveOutput(line)
+		then: 'the status is of correct build'
+		watcher.status.buildCorrect
+		and: 'receive line for starting list of modules'
+		watcher.receiveOutput('[INFO] Reactor Build Order:')
+		then: 'status no longer of correct build'
+		!watcher.status.buildCorrect
+	}
+
+	def 'shouldNoLongerShowCorrectBuildIfAnotherBuildIsLaunched'() {
+		given: 'the watcher is ready for a new build'
+		watcher.newBuild()
+		and: 'a line of build success'
+		def line = '[INFO] BUILD SUCCESS'
+		when: 'the watcher receives that line'
+		watcher.receiveOutput(line)
+		then: 'the status is of correct build'
+		watcher.status.buildCorrect
+		and: 'receive new build advice'
+		watcher.receiveBuildLaunched(new MvnBuild())
+		then: 'status no longer of correct build'
+		!watcher.status.buildCorrect
 	}
 
 	// Helper Methods ------------------------------------------------

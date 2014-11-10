@@ -34,10 +34,9 @@ class MvnBuild extends DefaultInvocationRequest {
 	/**
 	 * Creates a new Maven Build object specifying the
 	 */
-	@SuppressWarnings("GroovyAssignabilityCheck")
 	public MvnBuild() {
-		pomFileName = POM
-		goals = MVNCIS
+		setPomFileName(POM)
+		setGoals(MVNCIS)
 	}
 
 	// Public --------------------------------------------------------
