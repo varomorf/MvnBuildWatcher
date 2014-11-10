@@ -17,6 +17,7 @@ import static org.platypus.mvnWatcher.view.MvnWatcherGui.ICON_STATUS_LABEL
 import static org.platypus.mvnWatcher.view.MvnWatcherGui.RUNNING_ICON_URL
 import static org.platypus.mvnWatcher.view.MvnWatcherGui.STATUS_LABEL
 import static org.platypus.mvnWatcher.view.MvnWatcherGui.STOP_ICON_URL
+import static org.platypus.mvnWatcher.view.MvnWatcherGui.SUCCESS_ICON_URL
 
 /**
  * Created by alfergon on 09/10/2014.
@@ -95,8 +96,17 @@ class MvnWatcherGuiTest extends Specification {
         given: 'a build was running'
         gui.receiveBuildLaunched(defaultBuild)
         expect: 'the running gif should be set as status icon'
-        window.label(ICON_STATUS_LABEL).component().icon.location.path.contains(RUNNING_ICON_URL)
-    }
+		window.label(ICON_STATUS_LABEL).component().icon.location.path.contains(RUNNING_ICON_URL)
+	}
+
+	def 'shouldShowSuccessIconAfterCorrectBuild'(){
+		given: 'a build was running'
+		gui.receiveBuildLaunched(defaultBuild)
+		when: 'a success status update is received'
+		gui.receiveStatus(new MvnBuildStatus(buildCorrect: true))
+		then: 'correct build  icon is shown'
+		window.label(ICON_STATUS_LABEL).component().icon.location.path.contains(SUCCESS_ICON_URL)
+	}
 
 	// Helper Methods ------------------------------------------------
 

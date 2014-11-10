@@ -29,6 +29,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
     public static final String INITIAL_BUILD_STATUS = 'No active build running.'
     public static final String STOP_ICON_URL = 'images/stop-icon.png'
     public static final String RUNNING_ICON_URL = 'images/running-icon.gif'
+    public static final String SUCCESS_ICON_URL = 'images/success-icon.png'
     public static final String ICON_STATUS_LABEL = 'iconStatusLabel'
 
     // Attributes ----------------------------------------------------
@@ -103,7 +104,7 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 					}
 				}
 				panel(constraints: 'center, wrap') {
-					button(id: 'lauchBuildOnDirButton', text: 'Launch build on dir', actionPerformed: launchBuild)
+					button(id: 'launchBuildOnDirButton', text: 'Launch build on dir', actionPerformed: launchBuild)
 					button(id: 'launchProjectButton', text: 'Launch build project', actionPerformed: launchBuildProject)
 					button(id: 'stopBuildButton', text: 'Stop build', actionPerformed: stopBuild)
 				}
@@ -127,6 +128,12 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 			// change table data and force redraw of the table
 			statusTable.model.rowsModel.value = status.modulesStatus
 			statusTable.model.fireTableDataChanged()
+			// success status update
+			if(status.buildCorrect){
+				statusLabel.text = "Building success!"
+				iconStatusLabel.icon = successIcon
+			}
+			// failed status update
 			if(status.failed){
 				statusLabel.text = status.failure
                 iconStatusLabel.icon = stopIcon
@@ -143,10 +150,6 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
         }
 	}
 
-	// Package protected ---------------------------------------------
-
-	// Protected -----------------------------------------------------
-
 	/**
 	 * Clean the GUI and leave it as it starts
 	 */
@@ -155,6 +158,10 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
 		watcher.newBuild()
 		updateStatus()
 	}
+
+	// Package protected ---------------------------------------------
+
+	// Protected -----------------------------------------------------
 
 	/**
 	 * Returns the file of the directory in which the file choosers must start
@@ -183,6 +190,15 @@ class MvnWatcherGui implements MvnBuildOutputListener, MvnBuildStatusListener {
         def url = getClass().getClassLoader().getResource(RUNNING_ICON_URL)
         url ? new ImageIcon(url) : null
     }
+
+	/**
+	 * Returns an ImageIcon for the success icon
+	 * @return an ImageIcon for the success icon (or null if the image is not found)
+	 */
+	protected ImageIcon getSuccessIcon() {
+		def url = getClass().getClassLoader().getResource(SUCCESS_ICON_URL)
+		url ? new ImageIcon(url) : null
+	}
 
 	// Private -------------------------------------------------------
 

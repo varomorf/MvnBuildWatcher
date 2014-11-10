@@ -66,6 +66,8 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 	public void receiveBuildLaunched(MvnBuild build) {
 		// set the status to the starting build
 		build.status = status
+		// reset build correct status
+		status.buildCorrect = false
 	}
 
 	// Package protected ---------------------------------------------
@@ -153,6 +155,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 		if (line == START_OF_LIST) {
 			onList = true
 			listRead = false
+			status.buildCorrect = false
 		}
 		// check for finalization
 		if (line.contains(BUILD_SUCCESS)) {
@@ -162,6 +165,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 		// check for build failures
 		if (line.contains(ERROR_PART)) {
 			status.fail(line)
+			status.buildCorrect = false
 		}
 	}
 
