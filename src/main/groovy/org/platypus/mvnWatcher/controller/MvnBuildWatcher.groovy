@@ -24,6 +24,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 	public static final String BUILD_SUCCESS = '[INFO] BUILD SUCCESS'
 	public static final def PACKAGE_FILE_PART = /.+\.[tj]ar.*/
 	public static final def ARCHETYPE_JAR_PART = /.*Building archetype jar.*/
+	public static final def WAR_PART = /.*Building war: .*/
 
 	// Attributes ----------------------------------------------------
 
@@ -96,7 +97,7 @@ class MvnBuildWatcher implements MvnBuildOutputListener {
 	 * @return <code>true</code> if the line should be filtered. <code>false</code> otherwise
 	 */
 	private boolean isFiltered(String line) {
-		line ==~ PACKAGE_FILE_PART || line ==~ ARCHETYPE_JAR_PART
+		line ==~ PACKAGE_FILE_PART || line ==~ ARCHETYPE_JAR_PART || line ==~ WAR_PART
 	}
 
 	// Inner classes -------------------------------------------------

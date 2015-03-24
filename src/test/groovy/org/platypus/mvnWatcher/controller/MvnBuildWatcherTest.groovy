@@ -51,6 +51,17 @@ class MvnBuildWatcherTest extends Specification {
 		status.modulesStatus.size() == 1
 	}
 
+	def 'should not recognize .war building lines as modules'() {
+		when: 'watcher receives good line as module status'
+		watcher.setBuildingModule(status, '[INFO] Building Some Module 1.0.0')
+		then: 'there should be a new module'
+		status.modulesStatus.size() == 1
+		when: 'watcher receives bad line as module status'
+		watcher.setBuildingModule(status, '[INFO] Building war: /home/foo/bar/target/something.war')
+		then: 'there should be no new modules'
+		status.modulesStatus.size() == 1
+	}
+
 	def 'should not recognize archetype jar lines as modules'() {
 		when: 'watcher receives good line as module status'
 		watcher.setBuildingModule(status, '[INFO] Building Some Module 1.0.0')
