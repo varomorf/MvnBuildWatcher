@@ -17,3 +17,5 @@ Ej.
 
 Once the file is defined, you just load the file on the app and it will launch each build one after
 the other, while it analyzes the output from the build showing you the status of said build.
+
+DEVELOPMENT WILL BE ON HOLD UNTIL REQUESTED
